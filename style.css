@@ -139,3 +139,19 @@ p {
         width: 100%;
     }
 }
+/* Scroll Animations */
+.fade-in-on-scroll {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.fade-in-on-scroll.visible {
+    opacity: 1;
+}
+
+/* Scroll event to add 'visible' class */
+@media (max-width: 768px) {
+    .fade-in-on-scroll {
+        opacity: 1;
+    }
+}
