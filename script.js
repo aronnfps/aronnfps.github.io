@@ -1,25 +1,51 @@
-// Hacker-style yazı eklemek için script
+// script.js
 document.addEventListener("DOMContentLoaded", function() {
-    const hackerText = document.querySelector(".hacker-text");
-
+    const canvas = document.getElementById('hackerCanvas');
+    const ctx = canvas.getContext('2d');
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    
-    function generateRandomChar() {
+    const fontSize = 20;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+
+    // Ayarları başlat
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 0;
+        }
+    }
+
+    // Rakam ve harfleri rastgele oluştur
+    function randomChar() {
         return characters.charAt(Math.floor(Math.random() * characters.length));
     }
 
-    // Yazı sürekli olarak kayacak şekilde yazıları ekle
-    function createHackerEffect() {
-        const text = generateRandomChar();
-        hackerText.innerHTML += text; // Yeni harf ekle
+    // Çizim işlemi
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Arka planı sil
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Ekranın sol üst köşesinden kayarak sağa doğru ilerlemesini sağla
-        if (hackerText.innerHTML.length > 200) {
-            hackerText.innerHTML = ''; // Ekran dolarsa temizle
+        ctx.fillStyle = "green"; // Yazılar yeşil renkte olacak
+        ctx.font = `${fontSize}px monospace`;
+
+        for (let i = 0; i < drops.length; i++) {
+            const char = randomChar();
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+
+            drops[i]++;
         }
-
-        setTimeout(createHackerEffect, 50); // 50ms sonra yeni harf ekle
     }
 
-    createHackerEffect(); // Efekti başlat
+    // Canvas boyutlarını ayarlamak için pencere boyutunu dinle
+    window.addEventListener('resize', resizeCanvas);
+
+    // Başlangıç ayarları ve animasyonu başlat
+    resizeCanvas();
+    setInterval(draw, 35); // Hızını buradan ayarlayabilirsiniz
 });
