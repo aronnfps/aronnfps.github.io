@@ -4,10 +4,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const ctx = canvas.getContext('2d');
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const fontSize = 20;
-    const columns = Math.floor(canvas.width / fontSize);
+    const columns = Math.floor(canvas.width / fontSize); // Ekrandaki kolon sayısı
     const drops = [];
+    const speed = 2;
 
-    // Ayarları başlat
+    // Ekran boyutunu ayarla
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -16,12 +17,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Rastgele bir karakter seçme
+    // Rastgele bir karakter seç
     function randomChar() {
         return characters.charAt(Math.floor(Math.random() * characters.length));
     }
 
-    // Yazıları ekranda kaydırma
+    // Yazıları ekranda kaydır
     function draw() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Arka planı sil
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -32,17 +33,18 @@ document.addEventListener("DOMContentLoaded", function() {
         // Ekranda her kolon boyunca yazı kaydırma
         for (let i = 0; i < columns; i++) {
             const char = randomChar();
-            const xPos = i * fontSize; // X pozisyonu, her kolon için
+            const xPos = Math.floor(Math.random() * canvas.width); // X pozisyonu, ekranın herhangi bir yerinden başlayacak
             const yPos = drops[i] * fontSize; // Y pozisyonu, kayma miktarı
 
             ctx.fillText(char, xPos, yPos);
 
-            // Eğer yazı ekranın altına ulaştıysa, tekrar en üstten başlayacak
-            if (yPos > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0; // Yüksek ihtimalle kolon sıfırlanır
+            // Eğer yazı ekranın altına ulaştıysa, tekrar en üstten başlasın
+            if (yPos > canvas.height) {
+                drops[i] = 0; // Kolon sıfırlanır
             }
 
-            drops[i]++; // Yüksekliği arttırarak yazı aşağıya kayar
+            // Kayma hızını arttır
+            drops[i] += speed; // Bu sayede hareket eder
         }
     }
 
