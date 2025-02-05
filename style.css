@@ -74,3 +74,22 @@ p {
     0% { background-position: 0 0; }
     100% { background-position: 100% 0; }
 }
+/* Yazı Animasyonu */
+h1, p {
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+}
+
+h1 {
+    animation-delay: 0.5s;
+}
+
+p {
+    animation-delay: 1s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
