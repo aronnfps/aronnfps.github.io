@@ -7,13 +7,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const columns = canvas.width / fontSize;
     const drops = [];
 
-
     // Ayarları başlat
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         for (let x = 0; x < columns; x++) {
-            drops[x] = 0;
+            drops[x] = 0; // her kolonu başlat
         }
     }
 
@@ -30,10 +29,12 @@ document.addEventListener("DOMContentLoaded", function() {
         ctx.fillStyle = "green"; // Yazılar yeşil renkte olacak
         ctx.font = `${fontSize}px monospace`;
 
-        for (let i = 0; i < drops.length; i++) {
+        // Ekranda tüm kolonlar boyunca yazılar kayacak
+        for (let i = 0; i < canvas.width / fontSize; i++) {
             const char = randomChar();
             ctx.fillText(char, i * fontSize, drops[i] * fontSize);
 
+            // Ekranın altına geldiğinde rastgele bir yerde başlasın
             if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                 drops[i] = 0;
             }
