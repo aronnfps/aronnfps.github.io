@@ -158,3 +158,37 @@ p {
 iframe {
     display: none; /* Video görünmesin */
 }
+/* Hacker Background */
+.hacker-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: -1; /* Arka planda olsun */
+    overflow: hidden;
+}
+
+.hacker-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    color: limegreen;
+    white-space: nowrap;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: hackerEffect 0.05s infinite;
+}
+
+/* Hacker Effect Animation */
+@keyframes hackerEffect {
+    0% {
+        left: -10%;
+        top: -10%;
+    }
+    100% {
+        left: 100%;
+        top: 100%;
+    }
+}
