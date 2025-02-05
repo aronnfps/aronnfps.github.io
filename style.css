@@ -111,18 +111,15 @@ header nav ul li a:hover {
 
 /* Arka Plan Hacker Tarzı Efekti */
 #hero::before {
-/* Arka Plan Hacker Tarzı Efekti */
-#hero::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://www.transparenttextures.com/patterns/green-code.png');
+    background-color: rgba(0, 255, 0, 0.1); /* Geçici arka plan rengi */
     animation: hacker-animation 5s linear infinite;
 }
-
 
 @keyframes hacker-animation {
     0% {
