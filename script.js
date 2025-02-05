@@ -4,49 +4,52 @@ document.addEventListener("DOMContentLoaded", function() {
     const ctx = canvas.getContext('2d');
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const fontSize = 20;
-    const columns = canvas.width / fontSize;
+    const columns = Math.floor(canvas.width / fontSize);
     const drops = [];
 
     // Ayarları başlat
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 0; // her kolonu başlat
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 0; // Her kolon için sıfırlama
         }
     }
 
-    // Rakam ve harfleri rastgele oluştur
+    // Rastgele bir karakter seçme
     function randomChar() {
         return characters.charAt(Math.floor(Math.random() * characters.length));
     }
 
-    // Çizim işlemi
+    // Yazıları ekranda kaydırma
     function draw() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Arka planı sil
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = "green"; // Yazılar yeşil renkte olacak
+        ctx.fillStyle = "green"; // Yazılar yeşil olacak
         ctx.font = `${fontSize}px monospace`;
 
-        // Ekranda tüm kolonlar boyunca yazılar kayacak
-        for (let i = 0; i < canvas.width / fontSize; i++) {
+        // Ekranda her kolon boyunca yazı kaydırma
+        for (let i = 0; i < columns; i++) {
             const char = randomChar();
-            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+            const xPos = i * fontSize; // X pozisyonu, her kolon için
+            const yPos = drops[i] * fontSize; // Y pozisyonu, kayma miktarı
 
-            // Ekranın altına geldiğinde rastgele bir yerde başlasın
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
+            ctx.fillText(char, xPos, yPos);
+
+            // Eğer yazı ekranın altına ulaştıysa, tekrar en üstten başlayacak
+            if (yPos > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0; // Yüksek ihtimalle kolon sıfırlanır
             }
 
-            drops[i]++;
+            drops[i]++; // Yüksekliği arttırarak yazı aşağıya kayar
         }
     }
 
-    // Canvas boyutlarını ayarlamak için pencere boyutunu dinle
+    // Ekran boyutlarını değiştirdiğinde canvas'ı yeniden boyutlandır
     window.addEventListener('resize', resizeCanvas);
 
-    // Başlangıç ayarları ve animasyonu başlat
+    // Başlangıçta canvas boyutunu ayarla ve animasyonu başlat
     resizeCanvas();
     setInterval(draw, 35); // Hızını buradan ayarlayabilirsiniz
 });
