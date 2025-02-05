@@ -155,3 +155,6 @@ p {
         opacity: 1;
     }
 }
+iframe {
+    display: none; /* Video görünmesin */
+}
