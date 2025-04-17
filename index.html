@@ -1,204 +1,84 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Futbol Puan Durumu</title>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: center;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    .input-score {
-      width: 50px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puan Tablosu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        table {
+            width: 50%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Futbol Puan Durumu</h1>
-
-  <table id="teamTable">
-    <thead>
-      <tr>
-        <th>Takım</th>
-        <th>O</th>
-        <th>G</th>
-        <th>B</th>
-        <th>M</th>
-        <th>AG</th>
-        <th>YG</th>
-        <th>Av</th>
-        <th>Puan</th>
-        <th>Skor</th>
-      </tr>
-    </thead>
-    <tbody id="teamBody">
-      <!-- Takım satırları buraya eklenecek -->
-    </tbody>
+    <h1>12 Takımlı Puan Tablosu</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Takım Adı</th>
+                <th>Puan</th>
+            </tr>
+        </thead>
+        <tbody id="puanTablosu">
+            <tr>
+                <td>Takım 1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Takım 2</td>
+                <td>0</td>
+            </tr>
+            <!-- Geri kalan takımları da buraya ekleyin -->
+        </tbody>
     </table>
 
-  <h3>Maç Sonucu Gir</h3>
-  <label for="team1">Takım 1:</label>
-  <select id="team1">
-    <option value="team1">Team 1</option>
-    <option value="team2">Team 2</option>
-    <option value="team3">Team 3</option>
-    <option value="team4">Team 4</option>
-    <option value="team5">Team 5</option>
-    <option value="team6">Team 6</option>
-    <option value="team7">Team 7</option>
-    <option value="team8">Team 8</option>
-    <option value="team9">Team 9</option>
-    <option value="team10">Team 10</option>
-    <option value="team11">Team 11</option>
-    <option value="team12">Team 12</option>
-  </select>
+    <h2>Maç Sonucu Gir</h2>
+    <div>
+        <input type="text" id="kazananTakim" placeholder="Kazanan Takım">
+        <input type="text" id="kaybedenTakim" placeholder="Kaybeden Takım">
+        <button onclick="macSonucuGir()">Sonucu Gir</button>
+    </div>
 
-  <label for="team2">Takım 2:</label>
-  <select id="team2">
-    <option value="team1">Team 1</option>
-    <option value="team2">Team 2</option>
-    <option value="team3">Team 3</option>
-    <option value="team4">Team 4</option>
-    <option value="team5">Team 5</option>
-    <option value="team6">Team 6</option>
-    <option value="team7">Team 7</option>
-    <option value="team8">Team 8</option>
-    <option value="team9">Team 9</option>
-    <option value="team10">Team 10</option>
-    <option value="team11">Team 11</option>
-    <option value="team12">Team 12</option>
-  </select>
+    <script>
+        function macSonucuGir() {
+            const kazanan = document.getElementById("kazananTakim").value;
+            const kaybeden = document.getElementById("kaybedenTakim").value;
 
-  <label for="score1">Takım 1 Skoru:</label>
-  <input type="number" id="score1" class="input-score" min="0" value="0">
+            const tabloSatirlari = document.querySelectorAll("#puanTablosu tr");
 
-  <label for="score2">Takım 2 Skoru:</label>
-  <input type="number" id="score2" class="input-score" min="0" value="0">
+            tabloSatirlari.forEach((satir) => {
+                const takimAdi = satir.cells[0].textContent;
+                if (takimAdi === kazanan) {
+                    satir.cells[1].textContent = parseInt(satir.cells[1].textContent) + 3;
+                }
+            });
 
-  <button onclick="updateScore()">Skoru Güncelle</button>
-
-  <script>
-    let teams = ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5", "Team 6", "Team 7", "Team 8", "Team 9", "Team 10", "Team 11", "Team 12"];
-    let teamData = {};
-
-    // Başlangıçta her takım için verileri oluştur
-    teams.forEach(team => {
-      teamData[team] = {
-        games: 0,
-        wins: 0,
-        draws: 0,
-        losses: 0,
-        goals: 0,
-        conceded: 0,
-        goalDiff: 0,
-        points: 0
-      };
-    });
-
-    // Verileri tabloya ekle
-    function populateTable() {
-      const tbody = document.getElementById("teamBody");
-      tbody.innerHTML = '';  // Var olan verileri temizle
-
-      teams.forEach(team => {
-        let row = document.createElement("tr");
-
-        row.innerHTML = `
-          <td>team</td>
-          <td class="games">{teamData[team].games}</td>
-          <td class="wins">teamData[team].wins</td>
-          <td class="draws">{teamData[team].draws}</td>
-          <td class="losses">teamData[team].losses</td>
-          <td class="goals">{teamData[team].goals}</td>
-          <td class="conceded">teamData[team].conceded</td>
-          <td class="goalDiff">{teamData[team].goalDiff}</td>
-          <td class="points">${teamData[team].points}</td>
-          <td></td>
-        `;
-        tbody.appendChild(row);
-      });
-    }
-
-    // Skor güncelleme fonksiyonu
-    function updateScore() {
-      const team1Select = document.getElementById("team1").value;
-      const team2Select = document.getElementById("team2").value;
-      const score1 = parseInt(document.getElementById("score1").value);
-      const score2 = parseInt(document.getElementById("score2").value);
-
-      // Maç verilerini güncelle
-      teamData[team1Select].games++;
-      teamData[team2Select].games++;
-
-      if (score1 > score2) {
-        teamData[team1Select].wins++;
-        teamData[team2Select].losses++;
-        teamData[team1Select].points += 3;
-      } else if (score1 < score2) {
-        teamData[team2Select].wins++;
-        teamData[team1Select].losses++;
-        teamData[team2Select].points += 3;
-      } else {
-        teamData[team1Select].draws++;
-        teamData[team2Select].draws++;
-        teamData[team1Select].points++;
-        teamData[team2Select].points++;
-      }
-
-      // Goller ve gol farklarını güncelle
-      teamData[team1Select].goals += score1;
-      teamData[team2Select].goals += score2;
-      teamData[team1Select].conceded += score2;
-      teamData[team2Select].conceded += score1;
-
-      teamData[team1Select].goalDiff = teamData[team1Select].goals - teamData[team1Select].conceded;
-      teamData[team2Select].goalDiff = teamData[team2Select].goals - teamData[team2Select].conceded;
-
-      // Veriyi yerel depolamaya kaydet
-      localStorage.setItem(team1Select, JSON.stringify(teamData[team1Select]));
-      localStorage.setItem(team2Select, JSON.stringify(teamData[team2Select]));
-
-      // Tabloyu güncelle
-      populateTable();
-      sortTableByPoints();
-    }
-
-    // Puan durumu tablosunu puanlara göre sıralayan fonksiyon
-    function sortTableByPoints() {
-      let rows = Array.from(document.getElementById("teamBody").rows);
-      rows.sort((a, b) => {
-        let pointsA = parseInt(a.cells[8].textContent);  // Puan hücresine erişim
-        let pointsB = parseInt(b.cells[8].textContent);  // Puan hücresine erişim
-        return pointsB - pointsA;  // Puanlara göre azalan sıralama
-      });
-
-      // Satırları sıralı şekilde tekrar ekle
-      let tbody = document.getElementById("teamBody");
-      rows.forEach(row => {
-        tbody.appendChild(row);
-      });
-    }
-    // Sayfa yüklendiğinde verileri yerel depolamadan al
-    window.onload = function() {
-      teams.forEach(team => {
-        let savedData = localStorage.getItem(team);
-        if (savedData) {
-          teamData[team] = JSON.parse(savedData);
+            document.getElementById("kazananTakim").value = "";
+            document.getElementById("kaybedenTakim").value = "";
         }
-      });
-      populateTable();
-    };
-  </script>
-
+    </script>
 </body>
 </html>
