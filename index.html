@@ -187,20 +187,4 @@
             const pointsA = parseInt(a.querySelector(".points").textContent);
             const pointsB = parseInt(b.querySelector(".points").textContent);
             const goalDiffA = parseInt(a.querySelector(".goalDiff").textContent);
-            const goalDiffB = parseInt(b.querySelector(".goalDiff").textContent);
-
-            // Önce puan, sonra averaja göre sırala
-            if (pointsB !== pointsA) return pointsB - pointsA;
-            return goalDiffB - goalDiffA;
-        });
-
-        rows.forEach((row, index) => {
-            row.cells[0].textContent = index + 1; // Sıra numarasını güncelle
-            tableBody.appendChild(row);
-        });
-    }
-
-    // Tüm puanları sıfırla
-    function resetScores() {
-        teams.forEach(team => {
-            const resetData = {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
+            const goal
