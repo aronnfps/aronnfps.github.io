@@ -19,12 +19,6 @@
 
 <h1>RB PRO LİG - Puan Durumu</h1>
 
-<!-- Şampiyonlar Ligi Müziği Arka Planda Çalsın -->
-<audio id="championsLeagueMusic" autoplay loop>
-    <source src="https://example.com/your-champions-league-music.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
-
 <table id="teamTable">
     <thead>
         <tr>
@@ -57,20 +51,6 @@
     <button onclick="removeTeam()">Takım Sil</button>
 </div>
 
-<h2>Teknik Direktör Yönetimi</h2>
-<div class="input-container">
-    <label>Teknik Direktör Ekle:</label>
-    <select id="tdTeamSelect"></select>
-    <input type="text" id="newTD" placeholder="Teknik Direktör Adı">
-    <button onclick="addTD()">TD Ekle</button>
-</div>
-
-<div class="input-container">
-    <label>Teknik Direktör Sil:</label>
-    <select id="removeTDSelect"></select>
-    <button onclick="removeTD()">TD Sil</button>
-</div>
-
 <h2>Maç Sonucu Girin</h2>
 <div class="input-container">
     <label>Takım 1:</label>
@@ -89,6 +69,9 @@
     <button onclick="updateScore()">Skoru Güncelle</button>
     <button onclick="resetScores()">Puanları Sıfırla</button>
 </div>
+
+<!-- Şampiyonlar Ligi Müziği (YouTube Video) -->
+<iframe width="0" height="0" src="https://www.youtube.com/embed/xw7Z3wUV2CU?autoplay=1&loop=1&playlist=xw7Z3wUV2CU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 <script>
     let teams = JSON.parse(localStorage.getItem("teams")) || [
@@ -132,22 +115,16 @@
         const team1Select = document.getElementById("team1Select");
         const team2Select = document.getElementById("team2Select");
         const removeSelect = document.getElementById("removeTeamSelect");
-        const tdTeamSelect = document.getElementById("tdTeamSelect");
-        const removeTDSelect = document.getElementById("removeTDSelect");
 
         team1Select.innerHTML = "";
         team2Select.innerHTML = "";
         removeSelect.innerHTML = "";
-        tdTeamSelect.innerHTML = "";
-        removeTDSelect.innerHTML = "";
 
         teams.forEach(team => {
             let option = `<option value="${team}">${team}</option>`;
             team1Select.innerHTML += option;
             team2Select.innerHTML += option;
             removeSelect.innerHTML += option;
-            tdTeamSelect.innerHTML += option;
-            removeTDSelect.innerHTML += option;
         });
     }
 
@@ -179,37 +156,6 @@
         populateTable();
         populateDropdowns();
         alert(`${removeTeam} başarıyla silindi!`);
-    }
-
-    function addTD() {
-        const team = document.getElementById("tdTeamSelect").value;
-        const tdName = document.getElementById("newTD").value.trim();
-
-        if (!tdName) {
-            alert("Lütfen geçerli bir teknik direktör adı girin!");
-            return;
-        }
-
-        let teamData = JSON.parse(localStorage.getItem(team)) || {};
-        teamData.td = tdName;
-
-        localStorage.setItem(team, JSON.stringify(teamData));
-
-        populateTable();
-        alert(`${team} takımına ${tdName} teknik direktör olarak eklendi!`);
-        document.getElementById("newTD").value = "";
-    }
-
-    function removeTD() {
-        const team = document.getElementById("removeTDSelect").value;
-
-        let teamData = JSON.parse(localStorage.getItem(team)) || {};
-        teamData.td = "";
-
-        localStorage.setItem(team, JSON.stringify(teamData));
-
-        populateTable();
-        alert(`${team} takımının teknik direktörü silindi!`);
     }
 
     function updateScore() {
