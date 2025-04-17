@@ -10,8 +10,9 @@
         th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
         th { background-color: #1a2a6c; color: white; }
         tr:nth-child(even) { background-color: #f0f0f0; }
-        .input-container { margin-top: 20px; }
-        input, select { padding: 5px; margin: 5px; }
+        .input-container { margin-top: 20px; text-align: center; }
+        label { display: inline-block; width: 120px; text-align: right; }
+        input, select { padding: 5px; margin: 5px; width: 200px; }
         button { padding: 8px 12px; font-size: 16px; cursor: pointer; }
     </style>
 </head>
@@ -22,64 +23,64 @@
 <!-- Yönetici Girişi -->
 <h2>Yönetici Girişi</h2>
 <div class="input-container">
-    <label>Kullanıcı Adı:</label>
-    <input type="text" id="username" placeholder="Kullanıcı Adı">
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Username">
 </div>
 <div class="input-container">
-    <label>Şifre:</label>
-    <input type="password" id="password" placeholder="Şifre">
-    <button onclick="adminLogin()">Giriş Yap</button>
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="adminLogin()">Login</button>
 </div>
 
 <!-- Yönetici Bölümü (Başlangıçta Gizli) -->
 <div id="adminSection" style="display: none;">
-    <h2>Takım Yönetimi</h2>
+    <h2>Team Management</h2>
     <div class="input-container">
-        <label>Yeni Takım Adı:</label>
-        <input type="text" id="newTeamName" placeholder="Takım Adı">
-        <button onclick="addTeam()">Takım Ekle</button>
+        <label>New Team Name:</label>
+        <input type="text" id="newTeamName" placeholder="Team Name">
+        <button onclick="addTeam()">Add Team</button>
     </div>
 
     <div class="input-container">
-        <label>Takım Sil:</label>
+        <label>Remove Team:</label>
         <select id="removeTeamSelect"></select>
-        <button onclick="removeTeam()">Takım Sil</button>
+        <button onclick="removeTeam()">Remove Team</button>
     </div>
 
-    <h2>Teknik Direktör Yönetimi</h2>
+    <h2>Manager Management</h2>
     <div class="input-container">
-        <label>Takım Seç:</label>
+        <label>Select Team:</label>
         <select id="selectTeamForTD"></select>
     </div>
     <div class="input-container">
-        <label>Yeni Teknik Direktör:</label>
-        <input type="text" id="newTD" placeholder="Teknik Direktör Adı">
-        <button onclick="addTD()">TD Ekle</button>
+        <label>New Manager:</label>
+        <input type="text" id="newTD" placeholder="Manager Name">
+        <button onclick="addTD()">Add Manager</button>
     </div>
 
     <div class="input-container">
-        <label>Teknik Direktör Sil:</label>
+        <label>Remove Manager:</label>
         <select id="removeTDSelect"></select>
-        <button onclick="removeTD()">TD Sil</button>
+        <button onclick="removeTD()">Remove Manager</button>
     </div>
 
-    <h2>Maç Sonucu Girin</h2>
+    <h2>Match Result</h2>
     <div class="input-container">
-        <label>Takım 1:</label>
+        <label>Team 1:</label>
         <select id="team1Select"></select>
 
-        <label>Takım 2:</label>
+        <label>Team 2:</label>
         <select id="team2Select"></select>
 
         <br>
-        <label>Takım 1 Skoru:</label>
+        <label>Team 1 Score:</label>
         <input type="number" id="team1Score" value="0">
 
-        <label>Takım 2 Skoru:</label>
+        <label>Team 2 Score:</label>
         <input type="number" id="team2Score" value="0">
 
-        <button onclick="updateScore()">Skoru Güncelle</button>
-        <button onclick="resetScores()">Puanları Sıfırla</button>
+        <button onclick="updateScore()">Update Score</button>
+        <button onclick="resetScores()">Reset Scores</button>
     </div>
 </div>
 
@@ -87,17 +88,16 @@
 <table id="teamTable">
     <thead>
         <tr>
-            <th>Sıra</th>
-            <th>Takım</th>
-            <th>O</th>
-            <th>G</th>
-            <th>B</th>
-            <th>M</th>
-            <th>AG</th>
-            <th>YG</th>
-            <th>Av</th>
-            <th>Puan</th>
-            <th>TD</th> <!-- Teknik Direktör Sütunu -->
+            <th>Rank</th>
+            <th>Team</th>
+            <th>W</th>
+            <th>D</th>
+            <th>L</th>
+            <th>GF</th>
+            <th>GA</th>
+            <th>GD</th>
+            <th>Points</th>
+            <th>Manager</th> <!-- Manager Column -->
         </tr>
     </thead>
     <tbody id="teamBody"></tbody>
@@ -107,19 +107,19 @@
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 <script>
-    const correctUsername = "admin";  // Yönetici kullanıcı adı
-    const correctPassword = "admin123";  // Yönetici şifresi
+    const correctUsername = "admin";  // Admin username
+    const correctPassword = "admin123";  // Admin password
 
     function adminLogin() {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        // Kullanıcı adı ve şifre doğrulaması
+        // Check if username and password are correct
         if (username === correctUsername && password === correctPassword) {
-            document.getElementById("adminSection").style.display = "block";  // Admin bölümünü göster
-            alert("Giriş başarılı!");
+            document.getElementById("adminSection").style.display = "block";  // Show admin section
+            alert("Login successful!");
         } else {
-            alert("Kullanıcı adı veya şifre yanlış!");
+            alert("Incorrect username or password!");
         }
     }
 
@@ -186,7 +186,7 @@
     function addTeam() {
         const newTeam = document.getElementById("newTeamName").value.trim();
         if (!newTeam || teams.includes(newTeam)) {
-            alert("Lütfen geçerli ve yeni bir takım adı girin!");
+            alert("Please enter a valid and new team name!");
             return;
         }
 
@@ -198,7 +198,7 @@
 
         populateTable();
         populateDropdowns();
-        alert(`${newTeam} başarıyla eklendi!`);
+        alert(`${newTeam} successfully added!`);
         document.getElementById("newTeamName").value = "";
     }
 
@@ -210,14 +210,14 @@
 
         populateTable();
         populateDropdowns();
-        alert(`${removeTeam} başarıyla silindi!`);
+        alert(`${removeTeam} successfully removed!`);
     }
 
     function addTD() {
         const team = document.getElementById("selectTeamForTD").value;
         const tdName = document.getElementById("newTD").value.trim();
         if (!tdName) {
-            alert("Lütfen geçerli bir teknik direktör adı girin!");
+            alert("Please enter a valid manager name!");
             return;
         }
 
@@ -228,7 +228,7 @@
 
         localStorage.setItem(team, JSON.stringify(teamData));
         populateTable();
-        alert(`${team} takımına ${tdName} teknik direktörü eklendi!`);
+        alert(`${team} team manager added: ${tdName}`);
         document.getElementById("newTD").value = "";
     }
 
@@ -237,11 +237,11 @@
         let teamData = JSON.parse(localStorage.getItem(team)) || {
             games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
         };
-        teamData.td = "";  // Teknik direktörü kaldır
+        teamData.td = "";  // Remove manager
 
         localStorage.setItem(team, JSON.stringify(teamData));
         populateTable();
-        alert(`${team} takımından teknik direktör silindi!`);
+        alert(`${team} team's manager has been removed!`);
     }
 
     function updateScore() {
@@ -272,6 +272,24 @@
         localStorage.setItem(team2, JSON.stringify(team2Data));
 
         populateTable();
+    }
+
+    function resetScores() {
+        teams.forEach(team => {
+            let teamData = JSON.parse(localStorage.getItem(team));
+
+            // Keep Manager info and reset other stats
+            let td = teamData.td;
+
+            const resetData = {
+                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: td
+            };
+
+            localStorage.setItem(team, JSON.stringify(resetData));
+        });
+
+        populateTable();
+        alert("All teams' scores have been reset, but managers are retained!");
     }
 
     window.onload = function() {
