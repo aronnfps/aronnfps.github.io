@@ -19,6 +19,71 @@
 
 <h1>RB PRO LİG - Puan Durumu</h1>
 
+<!-- Yönetici Girişi -->
+<h2>Yönetici Girişi</h2>
+<div class="input-container">
+    <label>Kullanıcı Adı:</label>
+    <input type="text" id="username" placeholder="Kullanıcı Adı">
+</div>
+<div class="input-container">
+    <label>Şifre:</label>
+    <input type="password" id="password" placeholder="Şifre">
+    <button onclick="adminLogin()">Giriş Yap</button>
+</div>
+
+<!-- Yönetici Bölümü (Başlangıçta Gizli) -->
+<div id="adminSection" style="display: none;">
+    <h2>Takım Yönetimi</h2>
+    <div class="input-container">
+        <label>Yeni Takım Adı:</label>
+        <input type="text" id="newTeamName" placeholder="Takım Adı">
+        <button onclick="addTeam()">Takım Ekle</button>
+    </div>
+
+    <div class="input-container">
+        <label>Takım Sil:</label>
+        <select id="removeTeamSelect"></select>
+        <button onclick="removeTeam()">Takım Sil</button>
+    </div>
+
+    <h2>Teknik Direktör Yönetimi</h2>
+    <div class="input-container">
+        <label>Takım Seç:</label>
+        <select id="selectTeamForTD"></select>
+    </div>
+    <div class="input-container">
+        <label>Yeni Teknik Direktör:</label>
+        <input type="text" id="newTD" placeholder="Teknik Direktör Adı">
+        <button onclick="addTD()">TD Ekle</button>
+    </div>
+
+    <div class="input-container">
+        <label>Teknik Direktör Sil:</label>
+        <select id="removeTDSelect"></select>
+        <button onclick="removeTD()">TD Sil</button>
+    </div>
+
+    <h2>Maç Sonucu Girin</h2>
+    <div class="input-container">
+        <label>Takım 1:</label>
+        <select id="team1Select"></select>
+
+        <label>Takım 2:</label>
+        <select id="team2Select"></select>
+
+        <br>
+        <label>Takım 1 Skoru:</label>
+        <input type="number" id="team1Score" value="0">
+
+        <label>Takım 2 Skoru:</label>
+        <input type="number" id="team2Score" value="0">
+
+        <button onclick="updateScore()">Skoru Güncelle</button>
+        <button onclick="resetScores()">Puanları Sıfırla</button>
+    </div>
+</div>
+
+<!-- Puan Durumu Tablosu -->
 <table id="teamTable">
     <thead>
         <tr>
@@ -38,42 +103,26 @@
     <tbody id="teamBody"></tbody>
 </table>
 
-<h2>Takım Yönetimi</h2>
-<div class="input-container">
-    <label>Yeni Takım Adı:</label>
-    <input type="text" id="newTeamName" placeholder="Takım Adı">
-    <button onclick="addTeam()">Takım Ekle</button>
-</div>
-
-<div class="input-container">
-    <label>Takım Sil:</label>
-    <select id="removeTeamSelect"></select>
-    <button onclick="removeTeam()">Takım Sil</button>
-</div>
-
-<h2>Maç Sonucu Girin</h2>
-<div class="input-container">
-    <label>Takım 1:</label>
-    <select id="team1Select"></select>
-
-    <label>Takım 2:</label>
-    <select id="team2Select"></select>
-
-    <br>
-    <label>Takım 1 Skoru:</label>
-    <input type="number" id="team1Score" value="0">
-
-    <label>Takım 2 Skoru:</label>
-    <input type="number" id="team2Score" value="0">
-
-    <button onclick="updateScore()">Skoru Güncelle</button>
-    <button onclick="resetScores()">Puanları Sıfırla</button>
-</div>
-
-<h2>Şampiyonlar Ligi Müziği</h2>
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<!-- Şampiyonlar Ligi Müzik -->
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 <script>
+    const correctUsername = "admin";  // Yönetici kullanıcı adı
+    const correctPassword = "admin123";  // Yönetici şifresi
+
+    function adminLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Kullanıcı adı ve şifre doğrulaması
+        if (username === correctUsername && password === correctPassword) {
+            document.getElementById("adminSection").style.display = "block";  // Admin bölümünü göster
+            alert("Giriş başarılı!");
+        } else {
+            alert("Kullanıcı adı veya şifre yanlış!");
+        }
+    }
+
     let teams = JSON.parse(localStorage.getItem("teams")) || [
         "Paris Saint-Germain", "Chelsea", "Liverpool"
     ];
@@ -115,16 +164,22 @@
         const team1Select = document.getElementById("team1Select");
         const team2Select = document.getElementById("team2Select");
         const removeSelect = document.getElementById("removeTeamSelect");
+        const selectTeamForTD = document.getElementById("selectTeamForTD");
+        const removeTDSelect = document.getElementById("removeTDSelect");
 
         team1Select.innerHTML = "";
         team2Select.innerHTML = "";
         removeSelect.innerHTML = "";
+        selectTeamForTD.innerHTML = "";
+        removeTDSelect.innerHTML = "";
 
         teams.forEach(team => {
             let option = `<option value="${team}">${team}</option>`;
             team1Select.innerHTML += option;
             team2Select.innerHTML += option;
             removeSelect.innerHTML += option;
+            selectTeamForTD.innerHTML += option;
+            removeTDSelect.innerHTML += option;
         });
     }
 
@@ -158,6 +213,37 @@
         alert(`${removeTeam} başarıyla silindi!`);
     }
 
+    function addTD() {
+        const team = document.getElementById("selectTeamForTD").value;
+        const tdName = document.getElementById("newTD").value.trim();
+        if (!tdName) {
+            alert("Lütfen geçerli bir teknik direktör adı girin!");
+            return;
+        }
+
+        let teamData = JSON.parse(localStorage.getItem(team)) || {
+            games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
+        };
+        teamData.td = tdName;
+
+        localStorage.setItem(team, JSON.stringify(teamData));
+        populateTable();
+        alert(`${team} takımına ${tdName} teknik direktörü eklendi!`);
+        document.getElementById("newTD").value = "";
+    }
+
+    function removeTD() {
+        const team = document.getElementById("removeTDSelect").value;
+        let teamData = JSON.parse(localStorage.getItem(team)) || {
+            games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
+        };
+        teamData.td = "";  // Teknik direktörü kaldır
+
+        localStorage.setItem(team, JSON.stringify(teamData));
+        populateTable();
+        alert(`${team} takımından teknik direktör silindi!`);
+    }
+
     function updateScore() {
         const team1 = document.getElementById("team1Select").value;
         const team2 = document.getElementById("team2Select").value;
@@ -186,18 +272,6 @@
         localStorage.setItem(team2, JSON.stringify(team2Data));
 
         populateTable();
-    }
-
-    function resetScores() {
-        teams.forEach(team => {
-            const resetData = {
-                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
-            };
-            localStorage.setItem(team, JSON.stringify(resetData));
-        });
-
-        populateTable();
-        alert("Tüm takımların puanları sıfırlandı!");
     }
 
     window.onload = function() {
