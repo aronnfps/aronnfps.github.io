@@ -35,27 +35,6 @@
         </tr>
     </thead>
     <tbody id="teamBody">
-        <script>
-            const teams = [
-                "Paris Saint-Germain", "Chelsea", "Liverpool", "Arsenal", "Bayern Leverkusen",
-                "Real Madrid", "Inter", "Barcelona", "Manchester City", "Juventus", "Atletico Madrid", "AC Milan"
-            ];
-            
-            teams.forEach((team, index) => {
-                document.write(`<tr id="${team}">
-                    <td>${index + 1}</td>
-                    <td>${team}</td>
-                    <td class="games">0</td>
-                    <td class="wins">0</td>
-                    <td class="draws">0</td>
-                    <td class="losses">0</td>
-                    <td class="goals">0</td>
-                    <td class="conceded">0</td>
-                    <td class="goalDiff">0</td>
-                    <td class="points">0</td>
-                </tr>`);
-            });
-        </script>
     </tbody>
 </table>
 
@@ -69,22 +48,10 @@
 <h2>Maç Sonucu Girin</h2>
 <div class="input-container">
     <label>Takım 1:</label>
-    <select id="team1Select">
-        <script>
-            teams.forEach(team => {
-                document.write(`<option value="${team}">${team}</option>`);
-            });
-        </script>
-    </select>
+    <select id="team1Select"></select>
 
     <label>Takım 2:</label>
-    <select id="team2Select">
-        <script>
-            teams.forEach(team => {
-                document.write(`<option value="${team}">${team}</option>`);
-            });
-        </script>
-    </select>
+    <select id="team2Select"></select>
 
     <br>
     <label>Takım 1 Skoru:</label>
@@ -98,18 +65,59 @@
 </div>
 
 <script>
-    window.onload = function() {
-        loadScores();
-        sortTableByPoints();
-    };
+    let teams = JSON.parse(localStorage.getItem("teams")) || [
+        "Paris Saint-Germain", "Chelsea", "Liverpool"
+    ];
 
-    function loadScores() {
-        teams.forEach(team => {
-            const data = JSON.parse(localStorage.getItem(team)) || {
-                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
-            };
-            updateTableUI(team, data);
+    function populateTable() {
+        const tableBody = document.getElementById("teamBody");
+        tableBody.innerHTML = "";
+        teams.forEach((team, index) => {
+            let teamData = JSON.parse(localStorage.getItem(team)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
+            let row = `<tr id="${team}">
+                <td>${index + 1}</td>
+                <td>${team}</td>
+                <td class="games">${teamData.games}</td>
+                <td class="wins">${teamData.wins}</td>
+                <td class="draws">${teamData.draws}</td>
+                <td class="losses">${teamData.losses}</td>
+                <td class="goals">${teamData.goals}</td>
+                <td class="conceded">${teamData.conceded}</td>
+                <td class="goalDiff">${teamData.goalDiff}</td>
+                <td class="points">${teamData.points}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
         });
+    }
+
+    function populateDropdowns() {
+        const team1Select = document.getElementById("team1Select");
+        const team2Select = document.getElementById("team2Select");
+        team1Select.innerHTML = "";
+        team2Select.innerHTML = "";
+        teams.forEach(team => {
+            let option1 = `<option value="${team}">${team}</option>`;
+            let option2 = `<option value="${team}">${team}</option>`;
+            team1Select.innerHTML += option1;
+            team2Select.innerHTML += option2;
+        });
+    }
+
+    function addTeam() {
+        const newTeam = document.getElementById("newTeamName").value.trim();
+        if (!newTeam || teams.includes(newTeam)) {
+            alert("Lütfen geçerli ve yeni bir takım adı girin!");
+            return;
+        }
+
+        teams.push(newTeam);
+        localStorage.setItem("teams", JSON.stringify(teams));
+        localStorage.setItem(newTeam, JSON.stringify({games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0}));
+
+        populateTable();
+        populateDropdowns();
+        alert(`${newTeam} başarıyla eklendi!`);
+        document.getElementById("newTeamName").value = "";
     }
 
     function updateScore() {
@@ -118,8 +126,8 @@
         const team1Score = parseInt(document.getElementById("team1Score").value);
         const team2Score = parseInt(document.getElementById("team2Score").value);
 
-        let team1Data = JSON.parse(localStorage.getItem(team1)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
-        let team2Data = JSON.parse(localStorage.getItem(team2)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
+        let team1Data = JSON.parse(localStorage.getItem(team1));
+        let team2Data = JSON.parse(localStorage.getItem(team2));
 
         team1Data.games++;
         team2Data.games++;
@@ -139,67 +147,14 @@
         localStorage.setItem(team1, JSON.stringify(team1Data));
         localStorage.setItem(team2, JSON.stringify(team2Data));
 
-        updateTableUI(team1, team1Data);
-        updateTableUI(team2, team2Data);
-        sortTableByPoints();
+        populateTable();
     }
 
-    function updateTableUI(teamId, data) {
-        let row = document.getElementById(teamId);
-        if (row) {
-            row.querySelector(".points").textContent = data.points;
-            row.querySelector(".games").textContent = data.games;
-            row.querySelector(".wins").textContent = data.wins;
-            row.querySelector(".draws").textContent = data.draws;
-            row.querySelector(".losses").textContent = data.losses;
-            row.querySelector(".goals").textContent = data.goals;
-            row.querySelector(".conceded").textContent = data.conceded;
-            row.querySelector(".goalDiff").textContent = data.goalDiff;
-        }
-    }
+    window.onload = function() {
+        populateTable();
+        populateDropdowns();
+    };
+</script>
 
-    function sortTableByPoints() {
-        const table = document.getElementById("teamBody");
-        const rows = Array.from(table.getElementsByTagName("tr"));
-        rows.sort((a, b) => parseInt(b.querySelector(".points").textContent) - parseInt(a.querySelector(".points").textContent));
-        rows.forEach((row, index) => {
-            row.cells[0].textContent = index + 1;
-            table.appendChild(row);
-        });
-    }
-
-    function resetScores() {
-        teams.forEach(team => {
-            const resetData = {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
-            localStorage.setItem(team, JSON.stringify(resetData));
-            updateTableUI(team, resetData);
-        });
-        sortTableByPoints();
-        alert("Tüm puanlar sıfırlandı!");
-    }
-
-    function addTeam() {
-        const newTeam = document.getElementById("newTeamName").value.trim();
-        if (!newTeam) {
-            alert("Lütfen geçerli bir takım adı girin!");
-            return;
-        }
-        if (teams.includes(newTeam)) {
-            alert("Bu takım zaten mevcut!");
-            return;
-        }
-
-        teams.push(newTeam);
-        localStorage.setItem(newTeam, JSON.stringify({
-            games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
-        }));
-
-        const tableBody = document.getElementById("teamBody");
-        const row = document.createElement("tr");
-        row.id = newTeam;
-        row.innerHTML = `
-            <td>${teams.length}</td>
-            <td>${newTeam}</td>
-            <td class="games">0</
-
-
+</body>
+</html>
