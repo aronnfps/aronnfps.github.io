@@ -40,16 +40,20 @@
 
     .highlight {
       background-color: #ffeaa7;
-      font-weight: bold;
-    }
-
+      font-weight: bold;
+    }
     .input-container {
       margin-top: 20px;
       text-align: center;
     }
 
     .input-container input {
-      padding: 5px;
+      padding: 5px;
+      margin: 5px;
+    }
+
+    .input-container select {
+      padding: 5px;
       margin: 5px;
     }
   </style>
@@ -100,7 +104,7 @@
       <td class="points">0</td>
     </tr>
     <tr id="team3">
-      <td>3</td>
+      <td>3</td>
       <td>Arsenal</td>
       <td class="games">0</td>
       <td class="wins">0</td>
@@ -123,114 +127,93 @@
       <td class="goalDiff">0</td>
       <td class="points">0</td>
     </tr>
-    <tr id="team5">
-      <td>5</td>
-      <td>Bayern Munich</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team6">
-      <td>6</td>
-      <td>Inter</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team7">
-      <td>7</td>
-      <td>Barcelona</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team8">
-      <td>8</td>
-      <td>Manchester United</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team9">
-      <td>9</td>
-      <td>Manchester City</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team10">
-      <td>10</td>
-      <td>Liverpool</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team11">
-      <td>11</td>
-      <td>Juventus</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team12">
-      <td>12</td>
-      <td>AC Milan</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
+    <!-- Diğer 8 takımı burada ekleyebilirsin... -->
   </tbody>
 </table>
 
 <div class="input-container">
   <h2>Maç Sonucu Girin</h2>
-  <label for="team1">Takım 1 Seçin:</label>
+  <label for="team1">Takım 1:</label>
   <select id="team1Select">
     <option value="team1">Paris Saint-Germain</option>
     <option value="team2">Chelsaa</option>
     <option value="team3">Arsenal</option>
     <option value="team4">Real Madrid</option>
-    <option value="team5">Bayern Munich</option>
-    <option value="team6">Inter</option>
-    <option value="team7">Barcelona</option>
-    <option value="team
+    <!-- Diğer takımlar buraya eklenmeli... -->
+  </select>
+
+  <label for="team2">Takım 2:</label>
+  <select id="team2Select">
+    <option value="team2">Chelsaa</option>
+    <option value="team3">Arsenal</option>
+    <option value="team4">Real Madrid</option>
+    <option value="team1">Paris Saint-Germain</option>
+    <!-- Diğer takımlar buraya eklenmeli... -->
+  </select>
+
+  <br>
+  <label for="team1Score">Takım 1 Skoru:</label>
+  <input type="number" id="team1Score" value="0">
+
+  <label for="team2Score">Takım 2 Skoru:</label>
+  <input type="number" id="team2Score" value="0">
+
+  <button onclick="updateScore()">Skoru Güncelle</button>
+</div>
+
+<script>
+  // Skorları ve puan durumunu güncelleyen fonksiyon
+  function updateScore() {
+    const team1Select = document.getElementById("team1Select").value;
+    const team2Select = document.getElementById("team2Select").value;
+    const team1Score = parseInt(document.getElementById("team1Score").value);
+    const team2Score = parseInt(document.getElementById("team2Score").value);
+
+    // Takım 1 ve Takım 2'yi seçme
+    const team1Row = document.getElementById(team1Select);
+    const team2Row = document.getElementById(team2Select);
+
+    // Takımların istatistiklerini al
+    let team1Games = parseInt(team1Row.querySelector(".games").textContent);
+    let team1Wins = parseInt(team1Row.querySelector(".wins").textContent);
+    let team1Draws = parseInt(team1Row.querySelector(".draws").textContent);
+    let team1Losses = parseInt(team1Row.querySelector(".losses").textContent);
+    let team1Goals = parseInt(team1Row.querySelector(".goals").textContent);
+    let team1Conceded = parseInt(team1Row.querySelector(".conceded").textContent);
+    let team1GoalDiff = parseInt(team1Row.querySelector(".goalDiff").textContent);
+    let team1Points = parseInt(team1Row.querySelector(".points").textContent);
+
+    let team2Games = parseInt(team2Row.querySelector(".games").textContent);
+    let team2Wins = parseInt(team2Row.querySelector(".wins").textContent);
+    let team2Draws = parseInt(team2Row.querySelector(".draws").textContent);
+    let team2Losses = parseInt(team2Row.querySelector(".losses").textContent);
+    let team2Goals = parseInt(team2Row.querySelector(".goals").textContent);
+    let team2Conceded = parseInt(team2Row.querySelector(".conceded").textContent);
+    let team2GoalDiff = parseInt(team2Row.querySelector(".goalDiff").textContent);
+    let team2Points = parseInt(team2Row.querySelector(".points").textContent);
+
+    // Maç oynandı
+    team1Games++;
+    team2Games++;
+
+    // Skor karşılaştırması ve puan hesaplama
+    if (team1Score > team2Score) {
+      team1Wins++;
+      team2Losses++;
+      team1Points += 3; // 3 puan
+    } else if (team1Score < team2Score) {
+      team2Wins++;
+      team1Losses++;
+      team2Points += 3; // 3 puan
+    } else {
+      team1Draws++;
+      team2Draws++;
+      team1Points += 1; // 1 puan
+      team2Points += 1; // 1 puan
+    }
+
+    // Goller
+    team1Goals += team1Score;
+    team1Conceded += team2Score;
+    team2Goals += team2Score;
+    team
