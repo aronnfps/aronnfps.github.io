@@ -86,6 +86,7 @@
     <input type="number" id="team2Score" value="0">
 
     <button onclick="updateScore()">Skoru Güncelle</button>
+    <button onclick="resetScores()">Puanları Sıfırla</button>
 </div>
 
 <script>
@@ -108,7 +109,7 @@
         const team2 = document.getElementById("team2Select").value;
         const team1Score = parseInt(document.getElementById("team1Score").value);
         const team2Score = parseInt(document.getElementById("team2Score").value);
-        
+
         let team1Data = JSON.parse(localStorage.getItem(team1)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
         let team2Data = JSON.parse(localStorage.getItem(team2)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
 
@@ -124,41 +125,4 @@
         team2Data.goalDiff = team2Data.goals - team2Data.conceded;
 
         if (team1Score > team2Score) { team1Data.wins++; team1Data.points += 3; team2Data.losses++; }
-        else if (team1Score < team2Score) { team2Data.wins++; team2Data.points += 3; team1Data.losses++; }
-        else { team1Data.draws++; team2Data.draws++; team1Data.points++; team2Data.points++; }
-
-        localStorage.setItem(team1, JSON.stringify(team1Data));
-        localStorage.setItem(team2, JSON.stringify(team2Data));
-
-        updateTableUI(team1, team1Data);
-        updateTableUI(team2, team2Data);
-        sortTableByPoints();
-    }
-
-    function updateTableUI(teamId, data) {
-        let row = document.getElementById(teamId);
-        if (row) {
-            row.querySelector(".points").textContent = data.points;
-            row.querySelector(".games").textContent = data.games;
-            row.querySelector(".wins").textContent = data.wins;
-            row.querySelector(".draws").textContent = data.draws;
-            row.querySelector(".losses").textContent = data.losses;
-            row.querySelector(".goals").textContent = data.goals;
-            row.querySelector(".conceded").textContent = data.conceded;
-            row.querySelector(".goalDiff").textContent = data.goalDiff;
-        }
-    }
-
-    function sortTableByPoints() {
-        const table = document.getElementById("teamBody");
-        const rows = Array.from(table.getElementsByTagName("tr"));
-        rows.sort((a, b) => parseInt(b.querySelector(".points").textContent) - parseInt(a.querySelector(".points").textContent));
-        rows.forEach((row, index) => {
-            row.cells[0].textContent = index + 1; // Sıra numarasını güncelliyoruz
-            table.appendChild(row);
-        });
-    }
-</script>
-
-</body>
-</html>
+        else if (team1Score < team2Score) { team2Data.wins++; team2Data.points
