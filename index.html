@@ -14,15 +14,14 @@
     th, td {
       border: 1px solid #ccc;
       padding: 8px;
-      text-align: center;
-    }
-
+      text-align: center;
+    }
     th {
       background-color: #1a2a6c;
       color: white;
     }
 
-    tr:nth-child(even) {
+    tr:nth-child(even) {
       background-color: #f0f0f0;
     }
 
@@ -82,7 +81,7 @@
       <td class="goalDiff">0</td>
       <td class="points">0</td>
     </tr>
-    <tr id="team3">
+    <tr id="team3">
       <td>3</td>
       <td>Liverpool</td>
       <td class="games">0</td>
@@ -121,8 +120,7 @@
   <input type="number" id="team1Score" value="0">
 
   <label for="team2Score">Takım 2 Skoru:</label>
-  <input type="number" id="team2Score" value="0">
-
+  <input type="number" id="team2Score" value="0">
   <button onclick="updateScore()">Skoru Güncelle</button>
 </div>
 
@@ -183,9 +181,9 @@
     }
 
     // Goller
-    team1Goals += team1Score;
+    team1Goals += team1Score;
     team1Conceded += team2Score;
-    team2Goals += team2Score;
+    team2Goals += team2Score;
     team2Conceded += team1Score;
 
     // Gol averajı
@@ -209,11 +207,45 @@
     team2Row.querySelector(".goals").textContent = team2Goals;
     team2Row.querySelector(".conceded").textContent = team2Conceded;
     team2Row.querySelector(".goalDiff").textContent = team2GoalDiff;
-    team2Row.querySelector(".points").textContent = team2Points;
-
+    team2Row.querySelector(".points").textContent = team2Points;
     // Verileri localStorage'a kaydet
     saveToLocalStorage();
+
+    // Tabloyu güncelle ve sıralama yap
+    sortTable();
+  }
+
+  // Tabloyu sıralama fonksiyonu
+  function sortTable() {
+    let table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("teamTable");
+    switching = true;
+
+    // Tabloyu sıralamaya başla
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+
+      // Tabloda her satırı kontrol et
+      for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByClassName("points")[0];
+        y = rows[i + 1].getElementsByClassName("points")[0];
+
+        // Puanları karşılaştır
+        if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+
+      if (shouldSwitch) {
+        // Eğer sırayı değiştireceksek, satırları değiştir
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
     }
+  }
 
   // localStorage'a takımların verilerini kaydet
   function saveToLocalStorage() {
@@ -250,13 +282,15 @@
           tableRows[index].cells[2].textContent = team.games;
           tableRows[index].cells[3].textContent = team.wins;
           tableRows[index].cells[4].textContent = team.draws;
-          tableRows[index].cells[5].textContent = team.losses;
+          tableRows[index].cells[5].textContent = team.losses;
           tableRows[index].cells[6].textContent = team.goals;
           tableRows[index].cells[7].textContent = team.conceded;
           tableRows[index].cells[8].textContent = team.goalDiff;
           tableRows[index].cells[9].textContent = team.points;
-        }
-      });
+        }
+      });
+      // Sayfa yüklendiğinde sıralama yap
+      sortTable();
     }
   }
 </script>
