@@ -37,14 +37,14 @@
         <th>AG</th>
         <th>YG</th>
         <th>Av</th>
-        <th>Puan</th>
+        <th>Puan</th>
         <th>Skor</th>
       </tr>
     </thead>
     <tbody id="teamBody">
       <!-- Takım satırları buraya eklenecek -->
-    </tbody>
-  </table>
+    </tbody>
+    </table>
 
   <h3>Maç Sonucu Gir</h3>
   <label for="team1">Takım 1:</label>
@@ -75,7 +75,7 @@
     <option value="team8">Team 8</option>
     <option value="team9">Team 9</option>
     <option value="team10">Team 10</option>
-    <option value="team11">Team 11</option>
+    <option value="team11">Team 11</option>
     <option value="team12">Team 12</option>
   </select>
 
@@ -153,7 +153,7 @@
         teamData[team2Select].draws++;
         teamData[team1Select].points++;
         teamData[team2Select].points++;
-        }
+      }
 
       // Goller ve gol farklarını güncelle
       teamData[team1Select].goals += score1;
@@ -170,8 +170,24 @@
 
       // Tabloyu güncelle
       populateTable();
+      sortTableByPoints();
     }
 
+    // Puan durumu tablosunu puanlara göre sıralayan fonksiyon
+    function sortTableByPoints() {
+      let rows = Array.from(document.getElementById("teamBody").rows);
+      rows.sort((a, b) => {
+        let pointsA = parseInt(a.cells[8].textContent);  // Puan hücresine erişim
+        let pointsB = parseInt(b.cells[8].textContent);  // Puan hücresine erişim
+        return pointsB - pointsA;  // Puanlara göre azalan sıralama
+      });
+
+      // Satırları sıralı şekilde tekrar ekle
+      let tbody = document.getElementById("teamBody");
+      rows.forEach(row => {
+        tbody.appendChild(row);
+      });
+    }
     // Sayfa yüklendiğinde verileri yerel depolamadan al
     window.onload = function() {
       teams.forEach(team => {
