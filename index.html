@@ -31,7 +31,7 @@
       text-align: center;
     }
 
-    .input-container input, .input-container select {
+    .input-container input, .input-container select {
       padding: 5px;
       margin: 5px;
     }
@@ -43,7 +43,7 @@
 
 <table id="teamTable">
   <thead>
-    <tr>
+    <tr>
       <th>Sıra</th>
       <th>Takım</th>
       <th>O</th>
@@ -82,8 +82,126 @@
       <td class="goalDiff">0</td>
       <td class="points">0</td>
     </tr>
-    <!-- Diğer takımlar için aynı formatta satırlar eklenmiş -->
-    <!-- ... -->
+    <tr id="team3">
+      <td>3</td>
+      <td>Liverpool</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team4">
+      <td>4</td>
+      <td>Arsenal</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team5">
+      <td>5</td>
+      <td>Bayern Leverkusen</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team6">
+      <td>6</td>
+      <td>Real Madrid</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team7">
+      <td>7</td>
+      <td>Inter</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team8">
+      <td>8</td>
+      <td>Barcelona</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team9">
+      <td>9</td>
+      <td>Manchester City</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team10">
+      <td>10</td>
+      <td>Juventus</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team11">
+      <td>11</td>
+      <td>Atletico Madrid</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team12">
+      <td>12</td>
+      <td>AC Milan</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
   </tbody>
 </table>
 
@@ -127,6 +245,7 @@
 
   <label for="team2Score">Takım 2 Skoru:</label>
   <input type="number" id="team2Score" value="0">
+
   <button onclick="updateScore()">Skoru Güncelle</button>
 </div>
 
@@ -183,12 +302,13 @@
       draws: parseInt(team2Row.querySelector(".draws").textContent),
       losses: parseInt(team2Row.querySelector(".losses").textContent),
       goals: parseInt(team2Row.querySelector(".goals").textContent),
-      conceded: parseInt(team2Row.querySelector(".conceded").textContent),
+      conceded: parseInt(team2Row.querySelector(".conceded").text
+                         conceded: parseInt(team2Row.querySelector(".conceded").textContent),
       goalDiff: parseInt(team2Row.querySelector(".goalDiff").textContent),
       points: parseInt(team2Row.querySelector(".points").textContent)
     };
 
-    // Maç sonucu güncelleme
+    // Maçın sonuçlarını hesapla
     team1Data.games++;
     team2Data.games++;
 
@@ -203,19 +323,24 @@
     } else {
       team1Data.draws++;
       team2Data.draws++;
-      team1Data.points += 1;
-      team2Data.points += 1;
+      team1Data.points++;
+      team2Data.points++;
     }
 
+    // Goller ve gol farkını güncelle
     team1Data.goals += team1Score;
-    team1Data.conceded += team2Score;
-    team1Data.goalDiff = team1Data.goals - team1Data.conceded;
-
     team2Data.goals += team2Score;
+    team1Data.conceded += team2Score;
     team2Data.conceded += team1Score;
+
+    team1Data.goalDiff = team1Data.goals - team1Data.conceded;
     team2Data.goalDiff = team2Data.goals - team2Data.conceded;
 
-    // Tabloyu güncelleme
+    // Takım verilerini localStorage'a kaydet
+    localStorage.setItem(team1Select, JSON.stringify(team1Data));
+    localStorage.setItem(team2Select, JSON.stringify(team2Data));
+
+    // Tabloyu güncelle
   team1Row.querySelector(".games").textContent = team1Data.games;
     team1Row.querySelector(".wins").textContent = team1Data.wins;
     team1Row.querySelector(".draws").textContent = team1Data.draws;
@@ -234,14 +359,26 @@
     team2Row.querySelector(".goalDiff").textContent = team2Data.goalDiff;
     team2Row.querySelector(".points").textContent = team2Data.points;
 
-    // Verileri localStorage'a kaydet
-// Verileri localStorage'a kaydet
-    localStorage.setItem(team1Select, JSON.stringify(team1Data));
-    localStorage.setItem(team2Select, JSON.stringify(team2Data));
+    // Skor girildikten sonra tabloyu sıralamak için:
+    sortTableByPoints();
+  }
 
-    // Puan durumu ve maç sonucu güncellenmiş halde
-    loadScores();
+  // Puan durumu tablosunu puanlara göre sıralayan fonksiyon
+  function sortTableByPoints() {
+    let rows = Array.from(document.getElementById("teamTable").rows).slice(1);
+    rows.sort((a, b) => {
+      let pointsA = parseInt(a.querySelector(".points").textContent);
+      let pointsB = parseInt(b.querySelector(".points").textContent);
+      return pointsB - pointsA;
+    });
+
+    // Satırları sıralı şekilde tekrar ekle
+    let tbody = document.getElementById("teamBody");
+    rows.forEach(row => {
+      tbody.appendChild(row);
+    });
   }
 </script>
 
 </body>
+</html>
