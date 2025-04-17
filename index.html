@@ -5,18 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RB PRO LİG - Puan Durumu</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f6fc;
-      padding: 20px;
-      margin: 0;
-    }
-
-    h1 {
-      text-align: center;
-      color: #1a2a6c;
-    }
-
     table {
       width: 100%;
       border-collapse: collapse;
@@ -35,24 +23,14 @@
     }
 
     tr:nth-child(even) {
-      background-color: #f0f0f0;
-    }
-
-    .highlight {
-      background-color: #ffeaa7;
-      font-weight: bold;
+      background-color: #f0f0f0;
     }
     .input-container {
       margin-top: 20px;
       text-align: center;
     }
 
-    .input-container input {
-      padding: 5px;
-      margin: 5px;
-    }
-
-    .input-container select {
+    .input-container input, .input-container select {
       padding: 5px;
       margin: 5px;
     }
@@ -103,50 +81,21 @@
       <td class="goalDiff">0</td>
       <td class="points">0</td>
     </tr>
-    <tr id="team3">
-      <td>3</td>
-      <td>Arsenal</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team4">
-      <td>4</td>
-      <td>Real Madrid</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <!-- Diğer 8 takımı burada ekleyebilirsin... -->
+    <!-- Diğer 10 takımın satırlarını buraya ekleyebilirsin -->
   </tbody>
 </table>
-
 <div class="input-container">
   <h2>Maç Sonucu Girin</h2>
   <label for="team1">Takım 1:</label>
   <select id="team1Select">
     <option value="team1">Paris Saint-Germain</option>
     <option value="team2">Chelsaa</option>
-    <option value="team3">Arsenal</option>
-    <option value="team4">Real Madrid</option>
     <!-- Diğer takımlar buraya eklenmeli... -->
   </select>
 
   <label for="team2">Takım 2:</label>
   <select id="team2Select">
     <option value="team2">Chelsaa</option>
-    <option value="team3">Arsenal</option>
-    <option value="team4">Real Madrid</option>
     <option value="team1">Paris Saint-Germain</option>
     <!-- Diğer takımlar buraya eklenmeli... -->
   </select>
@@ -162,7 +111,7 @@
 </div>
 
 <script>
-  // Skorları ve puan durumunu güncelleyen fonksiyon
+  // Takımların istatistiklerini güncelleyen fonksiyon
   function updateScore() {
     const team1Select = document.getElementById("team1Select").value;
     const team2Select = document.getElementById("team2Select").value;
@@ -205,7 +154,7 @@
       team2Wins++;
       team1Losses++;
       team2Points += 3; // 3 puan
-    } else {
+    } else {
       team1Draws++;
       team2Draws++;
       team1Points += 1; // 1 puan
@@ -216,4 +165,33 @@
     team1Goals += team1Score;
     team1Conceded += team2Score;
     team2Goals += team2Score;
-    team
+    team2Conceded += team1Score;
+
+    // Gol averajı
+    team1GoalDiff = team1Goals - team1Conceded;
+    team2GoalDiff = team2Goals - team2Conceded;
+
+    // Güncellenmiş verileri tabloya yansıtma
+    team1Row.querySelector(".games").textContent = team1Games;
+    team1Row.querySelector(".wins").textContent = team1Wins;
+    team1Row.querySelector(".draws").textContent = team1Draws;
+    team1Row.querySelector(".losses").textContent = team1Losses;
+    team1Row.querySelector(".goals").textContent = team1Goals;
+    team1Row.querySelector(".conceded").textContent = team1Conceded;
+    team1Row.querySelector(".goalDiff").textContent = team1GoalDiff;
+    team1Row.querySelector(".points").textContent = team1Points;
+
+    team2Row.querySelector(".games").textContent = team2Games;
+    team2Row.querySelector(".wins").textContent = team2Wins;
+    team2Row.querySelector(".draws").textContent = team2Draws;
+    team2Row.querySelector(".losses").textContent = team2Losses;
+    team2Row.querySelector(".goals").textContent = team2Goals;
+    team2Row.querySelector(".conceded").textContent = team2Conceded;
+    team2Row.querySelector(".goalDiff").textContent = team2GoalDiff;
+    team2Row.querySelector(".points").textContent = team2Points;
+  }
+</script>
+
+</body>
+</html>
+```
