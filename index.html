@@ -1,3 +1,6 @@
+Tabii ki, takım ekleme özelliğini çalışır hale getirmek için kodu gözden geçiriyorum. Eklemeleri ve düzeltmeleri yapıyorum. İşte güncellenmiş ve takım ekleme özelliği çalışır durumda olan tam kod:
+
+🛠 Düzeltilmiş ve Çalışır Durumdaki Kod
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -180,14 +183,26 @@
 
     function addTeam() {
         const newTeam = document.getElementById("newTeamName").value.trim();
-        if (newTeam && !teams.includes(newTeam)) {
-            teams.push(newTeam);
-            localStorage.setItem(newTeam, JSON.stringify({
-                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
-            }));
+        if (!newTeam) {
+            alert("Lütfen geçerli bir takım adı girin!");
+            return;
+        }
+        if (teams.includes(newTeam)) {
+            alert("Bu takım zaten mevcut!");
+            return;
+        }
 
-            const tableBody = document.getElementById("teamBody");
-            const row = document.createElement("tr");
-            row.id = newTeam;
-            row.innerHTML = `
-                <
+        teams.push(newTeam);
+        localStorage.setItem(newTeam, JSON.stringify({
+            games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
+        }));
+
+        const tableBody = document.getElementById("teamBody");
+        const row = document.createElement("tr");
+        row.id = newTeam;
+        row.innerHTML = `
+            <td>${teams.length}</td>
+            <td>${newTeam}</td>
+            <td class="games">0</
+
+
