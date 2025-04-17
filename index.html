@@ -1,117 +1,162 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RB PRO LİG - Puan Durumu</title>
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; }
-    table { width: 90%; margin: 20px auto; border-collapse: collapse; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    th { background-color: #1a2a6c; color: white; }
-    tr:nth-child(even) { background-color: #f0f0f0; }
-    .input-container { margin-top: 20px; }
-    input, select { padding: 5px; margin: 5px; }
-    button { padding: 8px 12px; font-size: 16px; cursor: pointer; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RB PRO LİG - Puan Durumu</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        table { width: 90%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #1a2a6c; color: white; }
+        tr:nth-child(even) { background-color: #f0f0f0; }
+        .input-container { margin-top: 20px; }
+        input, select { padding: 5px; margin: 5px; }
+        button { padding: 8px 12px; font-size: 16px; cursor: pointer; }
+    </style>
 </head>
 <body>
 
 <h1>RB PRO LİG - Puan Durumu</h1>
 
 <table id="teamTable">
-  <thead>
-    <tr>
-      <th>Sıra</th>
-      <th>Takım</th>
-      <th>O</th>
-      <th>G</th>
-      <th>B</th>
-      <th>M</th>
-      <th>AG</th>
-      <th>YG</th>
-      <th>Av</th>
-      <th>Puan</th>
-    </tr>
-  </thead>
-  <tbody id="teamBody">
-    <tr id="team1"><td>1</td><td>Paris Saint-Germain</td><td class="games">0</td><td class="wins">0</td><td class="draws">0</td><td class="losses">0</td><td class="goals">0</td><td class="conceded">0</td><td class="goalDiff">0</td><td class="points">0</td></tr>
-    <tr id="team2"><td>2</td><td>Chelsea</td><td class="games">0</td><td class="wins">0</td><td class="draws">0</td><td class="losses">0</td><td class="goals">0</td><td class="conceded">0</td><td class="goalDiff">0</td><td class="points">0</td></tr>
-    <tr id="team3"><td>3</td><td>Liverpool</td><td class="games">0</td><td class="wins">0</td><td class="draws">0</td><td class="losses">0</td><td class="goals">0</td><td class="conceded">0</td><td class="goalDiff">0</td><td class="points">0</td></tr>
-    <!-- 9 takım daha ekleyebilirsin -->
-  </tbody>
+    <thead>
+        <tr>
+            <th>Sıra</th>
+            <th>Takım</th>
+            <th>O</th>
+            <th>G</th>
+            <th>B</th>
+            <th>M</th>
+            <th>AG</th>
+            <th>YG</th>
+            <th>Av</th>
+            <th>Puan</th>
+        </tr>
+    </thead>
+    <tbody id="teamBody">
+        <!-- 12 takımlık boş tablo oluşturduk -->
+        <script>
+            const teams = [
+                "Team1", "Team2", "Team3", "Team4", "Team5", "Team6", "Team7", "Team8", "Team9", "Team10", "Team11", "Team12"
+            ];
+            
+            teams.forEach((team, index) => {
+                document.write(`<tr id="${team}">
+                    <td>${index + 1}</td>
+                    <td>${team}</td>
+                    <td class="games">0</td>
+                    <td class="wins">0</td>
+                    <td class="draws">0</td>
+                    <td class="losses">0</td>
+                    <td class="goals">0</td>
+                    <td class="conceded">0</td>
+                    <td class="goalDiff">0</td>
+                    <td class="points">0</td>
+                </tr>`);
+            });
+        </script>
+    </tbody>
 </table>
+
 <h2>Maç Sonucu Girin</h2>
 <div class="input-container">
-  <label>Takım 1:</label>
-  <select id="team1Select">
-    <option value="team1">Paris Saint-Germain</option>
-    <option value="team2">Chelsea</option>
-    <option value="team3">Liverpool</option>
-    <!-- 9 takım daha ekleyebilirsin -->
-  </select>
+    <label>Takım 1:</label>
+    <select id="team1Select">
+        <script>
+            teams.forEach(team => {
+                document.write(`<option value="${team}">${team}</option>`);
+            });
+        </script>
+    </select>
 
-  <label>Takım 2:</label>
-  <select id="team2Select">
-    <option value="team1">Paris Saint-Germain</option>
-    <option value="team2">Chelsea</option>
-    <option value="team3">Liverpool</option>
-    <!-- 9 takım daha ekleyebilirsin -->
-  </select>
+    <label>Takım 2:</label>
+    <select id="team2Select">
+        <script>
+            teams.forEach(team => {
+                document.write(`<option value="${team}">${team}</option>`);
+            });
+        </script>
+    </select>
 
-  <br>
-  <label>Takım 1 Skoru:</label>
-  <input type="number" id="team1Score" value="0">
+    <br>
+    <label>Takım 1 Skoru:</label>
+    <input type="number" id="team1Score" value="0">
 
-  <label>Takım 2 Skoru:</label>
-  <input type="number" id="team2Score" value="0">
+    <label>Takım 2 Skoru:</label>
+    <input type="number" id="team2Score" value="0">
 
-  <button onclick="updateScore()">Skoru Güncelle</button>
+    <button onclick="updateScore()">Skoru Güncelle</button>
 </div>
+
 <script>
-  window.onload = function() { loadScores(); sortTableByPoints(); };
+    window.onload = function() {
+        loadScores();
+        sortTableByPoints();
+    };
 
-  function loadScores() {
-    const teams = document.querySelectorAll("#teamBody tr");
-    teams.forEach(row => {
-      const id = row.id;
-      const data = JSON.parse(localStorage.getItem(id)) || {
-        games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
-      };
-      updateTableUI(id, data);
-    });
-  }
+    function loadScores() {
+        teams.forEach(team => {
+            const data = JSON.parse(localStorage.getItem(team)) || {
+                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
+            };
+            updateTableUI(team, data);
+        });
+    }
 
-  function updateScore() {
-    const team1 = document.getElementById("team1Select").value;
-    const team2 = document.getElementById("team2Select").value;
-    const team1Score = parseInt(document.getElementById("team1Score").value);
-    const team2Score = parseInt(document.getElementById("team2Score").value);
-    
-    let team1Data = JSON.parse(localStorage.getItem(team1)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
-    let team2Data = JSON.parse(localStorage.getItem(team2)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
+    function updateScore() {
+        const team1 = document.getElementById("team1Select").value;
+        const team2 = document.getElementById("team2Select").value;
+        const team1Score = parseInt(document.getElementById("team1Score").value);
+        const team2Score = parseInt(document.getElementById("team2Score").value);
+        
+        let team1Data = JSON.parse(localStorage.getItem(team1)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
+        let team2Data = JSON.parse(localStorage.getItem(team2)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
 
-    if (team1Score > team2Score) { team1Data.wins++; team1Data.points += 3; team2Data.losses++; }
-    else if (team1Score < team2Score) { team2Data.wins++; team2Data.points += 3; team1Data.losses++; }
-    else { team1Data.draws++; team2Data.draws++; team1Data.points++; team2Data.points++; }
+        team1Data.games++;
+        team2Data.games++;
 
-    localStorage.setItem(team1, JSON.stringify(team1Data));
-    localStorage.setItem(team2, JSON.stringify(team2Data));
+        team1Data.goals += team1Score;
+        team2Data.goals += team2Score;
+        team1Data.conceded += team2Score;
+        team2Data.conceded += team1Score;
 
-    updateTableUI(team1, team1Data);
-    updateTableUI(team2, team2Data);
-    sortTableByPoints();
-  }
+        team1Data.goalDiff = team1Data.goals - team1Data.conceded;
+        team2Data.goalDiff = team2Data.goals - team2Data.conceded;
 
-  function updateTableUI(teamId, data) {
-    let row = document.getElementById(teamId);
-    if (row) { row.querySelector(".points").textContent = data.points; }
-  }
+        if (team1Score > team2Score) { team1Data.wins++; team1Data.points += 3; team2Data.losses++; }
+        else if (team1Score < team2Score) { team2Data.wins++; team2Data.points += 3; team1Data.losses++; }
+        else { team1Data.draws++; team2Data.draws++; team1Data.points++; team2Data.points++; }
 
-  function sortTableByPoints() {
-    const table = document.getElementById("teamBody");
-    const rows = Array.from(table.getElementsByTagName("tr"));
-    rows.sort((a, b) => parseInt(b.querySelector(".points").textContent) - parseInt(a.querySelector(".points").textContent));
-    rows.forEach(row => table.appendChild(row));
-  }
+        localStorage.setItem(team1, JSON.stringify(team1Data));
+        localStorage.setItem(team2, JSON.stringify(team2Data));
+
+        updateTableUI(team1, team1Data);
+        updateTableUI(team2, team2Data);
+        sortTableByPoints();
+    }
+
+    function updateTableUI(teamId, data) {
+        let row = document.getElementById(teamId);
+        if (row) {
+            row.querySelector(".points").textContent = data.points;
+            row.querySelector(".games").textContent = data.games;
+            row.querySelector(".wins").textContent = data.wins;
+            row.querySelector(".draws").textContent = data.draws;
+            row.querySelector(".losses").textContent = data.losses;
+            row.querySelector(".goals").textContent = data.goals;
+            row.querySelector(".conceded").textContent = data.conceded;
+            row.querySelector(".goalDiff").textContent = data.goalDiff;
+        }
+    }
+
+    function sortTableByPoints() {
+        const table = document.getElementById("teamBody");
+        const rows = Array.from(table.getElementsByTagName("tr"));
+        rows.sort((a, b) => parseInt(b.querySelector(".points").textContent) - parseInt(a.querySelector(".points").textContent));
+        rows.forEach(row => table.appendChild(row));
+    }
 </script>
+
+</body>
+</html>
