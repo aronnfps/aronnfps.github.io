@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RB PRO LİG - Puan Durumu</title>
+    <title>RB PRO LİG</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: url('https://i.imgur.com/NnTgIyz.jpeg') no-repeat center center fixed;
+            background: url('https://i.hizliresim.com/qoh3lui.png') no-repeat center center fixed;
             background-size: cover;
             margin: 0;
             padding: 0;
@@ -63,227 +63,240 @@
         iframe {
             margin-top: 30px;
         }
+        .home-btn {
+            margin-top: 20px;
+            font-size: 24px;
+            padding: 12px 20px;
+            background-color: #1a2a6c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
-    <!-- Puan Durumu Sayfası -->
-    <div class="content">
-        <h1>RB PRO LİG - Puan Durumu</h1>
+<div class="content">
+    <h1>RB PRO LİG</h1>
 
-        <!-- Yönetici Girişi -->
-        <h2>Yönetici Girişi</h2>
-        <div class="input-container">
-            <input type="text" id="username" placeholder="Kullanıcı Adı">
-            <input type="password" id="password" placeholder="Şifre">
-            <button onclick="adminLogin()">Giriş Yap</button>
-        </div>
+    <!-- Anasayfa Butonu -->
+    <button class="home-btn" onclick="location.href='puan_durumu.html'">RB PRO LİG</button>
 
-        <!-- Yönetici Bölümü (Başlangıçta Gizli) -->
-        <div id="adminSection" style="display: none;">
-            <h2>Takım Yönetimi</h2>
-            <div class="input-container">
-                <input type="text" id="newTeamName" placeholder="Yeni Takım Adı">
-                <button onclick="addTeam()">Takım Ekle</button>
-            </div>
-
-            <div class="input-container">
-                <select id="removeTeamSelect"></select>
-                <button onclick="removeTeam()">Takım Sil</button>
-            </div>
-
-            <h2>Yönetici Yönetimi</h2>
-            <div class="input-container">
-                <select id="selectTeamForTD"></select>
-            </div>
-            <div class="input-container">
-                <input type="text" id="newTD" placeholder="Yeni Yönetici">
-                <button onclick="addTD()">Yönetici Ekle</button>
-            </div>
-
-            <div class="input-container">
-                <select id="removeTDSelect"></select>
-                <button onclick="removeTD()">Yönetici Sil</button>
-            </div>
-
-            <h2>Maç Sonucu</h2>
-            <div class="input-container">
-                <select id="team1Select"></select>
-                <select id="team2Select"></select>
-                <input type="number" id="team1Score" value="0" placeholder="Takım 1 Skoru">
-                <input type="number" id="team2Score" value="0" placeholder="Takım 2 Skoru">
-                <button onclick="updateScore()">Skoru Güncelle</button>
-                <button onclick="resetScores()">Puanları Sıfırla</button>
-            </div>
-        </div>
-
-        <!-- Puan Durumu Tablosu -->
-        <table id="teamTable">
-            <thead>
-                <tr>
-                    <th>Sıra</th>
-                    <th>Takım</th>
-                    <th>G</th>
-                    <th>B</th>
-                    <th>M</th>
-                    <th>AG</th>
-                    <th>YG</th>
-                    <th>AV</th>
-                    <th>Puan</th>
-                    <th>Yönetici</th>
-                </tr>
-            </thead>
-            <tbody id="teamBody"></tbody>
-        </table>
-
-        <!-- Şampiyonlar Ligi Müzik -->
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <!-- Yönetici Girişi -->
+    <h2>Yönetici Girişi</h2>
+    <div class="input-container">
+        <input type="text" id="username" placeholder="Kullanıcı Adı">
+        <input type="password" id="password" placeholder="Şifre">
+        <button onclick="adminLogin()">Giriş Yap</button>
     </div>
 
-    <!-- JavaScript Kısmı -->
-    <script>
-        const correctUsername = "admin";
-        const correctPassword = "admin123";
+    <!-- Yönetici Bölümü (Başlangıçta Gizli) -->
+    <div id="adminSection" style="display: none;">
+        <h2>Takım Yönetimi</h2>
+        <div class="input-container">
+            <input type="text" id="newTeamName" placeholder="Yeni Takım Adı">
+            <button onclick="addTeam()">Takım Ekle</button>
+        </div>
 
-        function adminLogin() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            if (username === correctUsername && password === correctPassword) {
-                document.getElementById("adminSection").style.display = "block";
-                alert("Giriş başarılı!");
-            } else {
-                alert("Yanlış kullanıcı adı veya şifre!");
-            }
+        <div class="input-container">
+            <select id="removeTeamSelect"></select>
+            <button onclick="removeTeam()">Takım Sil</button>
+        </div>
+
+        <h2>Yönetici Yönetimi</h2>
+        <div class="input-container">
+            <select id="selectTeamForTD"></select>
+        </div>
+        <div class="input-container">
+            <input type="text" id="newTD" placeholder="Yeni Yönetici">
+            <button onclick="addTD()">Yönetici Ekle</button>
+        </div>
+
+        <div class="input-container">
+            <select id="removeTDSelect"></select>
+            <button onclick="removeTD()">Yönetici Sil</button>
+        </div>
+
+        <h2>Maç Sonucu</h2>
+        <div class="input-container">
+            <select id="team1Select"></select>
+            <select id="team2Select"></select>
+            <input type="number" id="team1Score" value="0" placeholder="Takım 1 Skoru">
+            <input type="number" id="team2Score" value="0" placeholder="Takım 2 Skoru">
+            <button onclick="updateScore()">Skoru Güncelle</button>
+            <button onclick="resetScores()">Puanları Sıfırla</button>
+        </div>
+    </div>
+
+    <!-- Puan Durumu Tablosu -->
+    <table id="teamTable">
+        <thead>
+            <tr>
+                <th>Sıra</th>
+                <th>Takım</th>
+                <th>G</th>
+                <th>B</th>
+                <th>M</th>
+                <th>AG</th>
+                <th>YG</th>
+                <th>AV</th>
+                <th>Puan</th>
+                <th>Yönetici</th>
+            </tr>
+        </thead>
+        <tbody id="teamBody"></tbody>
+    </table>
+
+    <!-- Şampiyonlar Ligi Müzik -->
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+
+<!-- JavaScript Kısmı -->
+<script>
+    const correctUsername = "admin";
+    const correctPassword = "admin123";
+
+    function adminLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        if (username === correctUsername && password === correctPassword) {
+            document.getElementById("adminSection").style.display = "block";
+            alert("Giriş başarılı!");
+        } else {
+            alert("Yanlış kullanıcı adı veya şifre!");
         }
+    }
 
-        let teams = JSON.parse(localStorage.getItem("teams")) || ["Paris Saint-Germain", "Chelsea", "Liverpool"];
+    let teams = JSON.parse(localStorage.getItem("teams")) || ["Paris Saint-Germain", "Chelsea", "Liverpool"];
 
-        function populateTable() {
-            const tableBody = document.getElementById("teamBody");
-            tableBody.innerHTML = "";
+    function populateTable() {
+        const tableBody = document.getElementById("teamBody");
+        tableBody.innerHTML = "";
 
-            const sortedTeams = [...teams].sort((a, b) => {
-                const dataA = JSON.parse(localStorage.getItem(a)) || { points: 0, goalDiff: 0 };
-                const dataB = JSON.parse(localStorage.getItem(b)) || { points: 0, goalDiff: 0 };
-                if (dataB.points !== dataA.points) return dataB.points - dataA.points;
-                return dataB.goalDiff - dataA.goalDiff;
-            });
+        const sortedTeams = [...teams].sort((a, b) => {
+            const dataA = JSON.parse(localStorage.getItem(a)) || { points: 0, goalDiff: 0 };
+            const dataB = JSON.parse(localStorage.getItem(b)) || { points: 0, goalDiff: 0 };
+            if (dataB.points !== dataA.points) return dataB.points - dataA.points;
+            return dataB.goalDiff - dataA.goalDiff;
+        });
 
-            sortedTeams.forEach((team, index) => {
-                const teamData = JSON.parse(localStorage.getItem(team)) || {
-                    games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
-                };
-                let row = `<tr>
-                    <td>${index + 1}</td>
-                    <td>${team}</td>
-                    <td>${teamData.wins + teamData.draws + teamData.losses}</td>
-                    <td>${teamData.draws}</td>
-                    <td>${teamData.losses}</td>
-                    <td>${teamData.goals}</td>
-                    <td>${teamData.conceded}</td>
-                    <td>${teamData.goalDiff}</td>
-                    <td>${teamData.points}</td>
-                    <td>${teamData.td}</td>
-                </tr>`;
-                tableBody.innerHTML += row;
-            });
-        }
-
-        function populateDropdowns() {
-            const selects = [
-                "team1Select", "team2Select", "removeTeamSelect", "selectTeamForTD", "removeTDSelect"
-            ];
-            selects.forEach(id => document.getElementById(id).innerHTML = "");
-
-            teams.forEach(team => {
-                selects.forEach(id => {
-                    const select = document.getElementById(id);
-                    const option = document.createElement("option");
-                    option.value = team;
-                    option.textContent = team;
-                    select.appendChild(option);
-                });
-            });
-        }
-
-        function addTeam() {
-            const newTeam = document.getElementById("newTeamName").value.trim();
-            if (!newTeam || teams.includes(newTeam)) return alert("Geçerli bir takım adı gir!");
-            teams.push(newTeam);
-            localStorage.setItem("teams", JSON.stringify(teams));
-            localStorage.setItem(newTeam, JSON.stringify({
+        sortedTeams.forEach((team, index) => {
+            const teamData = JSON.parse(localStorage.getItem(team)) || {
                 games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
-            }));
-            populateTable();
-            populateDropdowns();
-            document.getElementById("newTeamName").value = "";
-        }
+            };
+            let row = `<tr>
+                <td>${index + 1}</td>
+                <td>${team}</td>
+                <td>${teamData.wins + teamData.draws + teamData.losses}</td>
+                <td>${teamData.draws}</td>
+                <td>${teamData.losses}</td>
+                <td>${teamData.goals}</td>
+                <td>${teamData.conceded}</td>
+                <td>${teamData.goalDiff}</td>
+                <td>${teamData.points}</td>
+                <td>${teamData.td}</td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
 
-        function removeTeam() {
-            const team = document.getElementById("removeTeamSelect").value;
-            teams = teams.filter(t => t !== team);
-            localStorage.setItem("teams", JSON.stringify(teams));
-            localStorage.removeItem(team);
-            populateTable();
-            populateDropdowns();
-        }
+    function populateDropdowns() {
+        const selects = [
+            "team1Select", "team2Select", "removeTeamSelect", "selectTeamForTD", "removeTDSelect"
+        ];
+        selects.forEach(id => document.getElementById(id).innerHTML = "");
 
-        function addTD() {
-            const team = document.getElementById("selectTeamForTD").value;
-            const tdName = document.getElementById("newTD").value.trim();
-            if (!tdName) return alert("Yönetici adı girin!");
-            let data = JSON.parse(localStorage.getItem(team));
-            data.td = tdName;
-            localStorage.setItem(team, JSON.stringify(data));
-            populateTable();
-            document.getElementById("newTD").value = "";
-        }
-
-        function removeTD() {
-            const team = document.getElementById("removeTDSelect").value;
-            let data = JSON.parse(localStorage.getItem(team));
-            data.td = "";
-            localStorage.setItem(team, JSON.stringify(data));
-            populateTable();
-        }
-
-        function updateScore() {
-            const t1 = document.getElementById("team1Select").value;
-            const t2 = document.getElementById("team2Select").value;
-            const s1 = parseInt(document.getElementById("team1Score").value);
-            const s2 = parseInt(document.getElementById("team2Score").value);
-
-            let d1 = JSON.parse(localStorage.getItem(t1));
-            let d2 = JSON.parse(localStorage.getItem(t2));
-
-            d1.games++; d2.games++;
-            d1.goals += s1; d1.conceded += s2;
-            d2.goals += s2; d2.conceded += s1;
-
-            d1.goalDiff = d1.goals - d1.conceded;
-            d2.goalDiff = d2.goals - d2.conceded;
-
-            if (s1 > s2) { d1.wins++; d1.points += 3; d2.losses++; }
-            else if (s1 < s2) { d2.wins++; d2.points += 3; d1.losses++; }
-            else { d1.draws++; d2.draws++; d1.points++; d2.points++; }
-
-            localStorage.setItem(t1, JSON.stringify(d1));
-            localStorage.setItem(t2, JSON.stringify(d2));
-            populateTable();
-        }
-
-        function resetScores() {
-            teams.forEach(team => {
-                let d = JSON.parse(localStorage.getItem(team));
-                d = { games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: d.td };
-                localStorage.setItem(team, JSON.stringify(d));
+        teams.forEach(team => {
+            selects.forEach(id => {
+                const select = document.getElementById(id);
+                const option = document.createElement("option");
+                option.value = team;
+                option.textContent = team;
+                select.appendChild(option);
             });
-            populateTable();
-        }
+        });
+    }
 
-        window.onload = () => {
-            populateTable();
-            populateDropdowns();
-        };
-    </script>
+    function addTeam() {
+        const newTeam = document.getElementById("newTeamName").value.trim();
+        if (!newTeam || teams.includes(newTeam)) return alert("Geçerli bir takım adı gir!");
+        teams.push(newTeam);
+        localStorage.setItem("teams", JSON.stringify(teams));
+        localStorage.setItem(newTeam, JSON.stringify({
+            games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
+        }));
+        populateTable();
+        populateDropdowns();
+        document.getElementById("newTeamName").value = "";
+    }
+
+    function removeTeam() {
+        const team = document.getElementById("removeTeamSelect").value;
+        teams = teams.filter(t => t !== team);
+        localStorage.setItem("teams", JSON.stringify(teams));
+        localStorage.removeItem(team);
+        populateTable();
+        populateDropdowns();
+    }
+
+    function addTD() {
+        const team = document.getElementById("selectTeamForTD").value;
+        const tdName = document.getElementById("newTD").value.trim();
+        if (!tdName) return alert("Yönetici adı girin!");
+        let data = JSON.parse(localStorage.getItem(team));
+        data.td = tdName;
+        localStorage.setItem(team, JSON.stringify(data));
+        populateTable();
+        document.getElementById("newTD").value = "";
+    }
+
+    function removeTD() {
+        const team = document.getElementById("removeTDSelect").value;
+        let data = JSON.parse(localStorage.getItem(team));
+        data.td = "";
+        localStorage.setItem(team, JSON.stringify(data));
+        populateTable();
+    }
+
+    function updateScore() {
+        const t1 = document.getElementById("team1Select").value;
+        const t2 = document.getElementById("team2Select").value;
+        const s1 = parseInt(document.getElementById("team1Score").value);
+        const s2 = parseInt(document.getElementById("team2Score").value);
+
+        let d1 = JSON.parse(localStorage.getItem(t1));
+        let d2 = JSON.parse(localStorage.getItem(t2));
+
+        d1.games++; d2.games++;
+        d1.goals += s1; d1.conceded += s2;
+        d2.goals += s2; d2.conceded += s1;
+
+        d1.goalDiff = d1.goals - d1.conceded;
+        d2.goalDiff = d2.goals - d2.conceded;
+
+        if (s1 > s2) { d1.wins++; d1.points += 3; d2.losses++; }
+        else if (s1 < s2) { d2.wins++; d2.points += 3; d1.losses++; }
+        else { d1.draws++; d2.draws++; d1.points++; d2.points++; }
+
+        localStorage.setItem(t1, JSON.stringify(d1));
+        localStorage.setItem(t2, JSON.stringify(d2));
+        populateTable();
+    }
+
+    function resetScores() {
+        teams.forEach(team => {
+            let d = JSON.parse(localStorage.getItem(team));
+            d = { games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: d.td };
+            localStorage.setItem(team, JSON.stringify(d));
+        });
+        populateTable();
+    }
+
+    window.onload = () => {
+        populateTable();
+        populateDropdowns();
+    };
+</script>
+
 </body>
 </html>
