@@ -32,6 +32,7 @@
             <th>YG</th>
             <th>Av</th>
             <th>Puan</th>
+            <th>TD</th> <!-- Teknik Direktör Sütunu -->
         </tr>
     </thead>
     <tbody id="teamBody"></tbody>
@@ -74,13 +75,12 @@
         "Paris Saint-Germain", "Chelsea", "Liverpool"
     ];
 
-    // Tabloyu doldur
     function populateTable() {
         const tableBody = document.getElementById("teamBody");
         tableBody.innerHTML = "";
         teams.forEach((team, index) => {
             let teamData = JSON.parse(localStorage.getItem(team)) || {
-                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
+                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
             };
             let row = `<tr id="${team}">
                 <td>${index + 1}</td>
@@ -93,12 +93,12 @@
                 <td class="conceded">${teamData.conceded}</td>
                 <td class="goalDiff">${teamData.goalDiff}</td>
                 <td class="points">${teamData.points}</td>
+                <td class="td">${teamData.td}</td> <!-- Teknik Direktör için boş sütun -->
             </tr>`;
             tableBody.innerHTML += row;
         });
     }
 
-    // Dropdown listeleri doldur
     function populateDropdowns() {
         const team1Select = document.getElementById("team1Select");
         const team2Select = document.getElementById("team2Select");
@@ -116,7 +116,6 @@
         });
     }
 
-    // Takım ekleme
     function addTeam() {
         const newTeam = document.getElementById("newTeamName").value.trim();
         if (!newTeam || teams.includes(newTeam)) {
@@ -126,7 +125,7 @@
 
         teams.push(newTeam);
         localStorage.setItem("teams", JSON.stringify(teams));
-        localStorage.setItem(newTeam, JSON.stringify({games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0}));
+        localStorage.setItem(newTeam, JSON.stringify({games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""}));
 
         populateTable();
         populateDropdowns();
@@ -134,7 +133,6 @@
         document.getElementById("newTeamName").value = "";
     }
 
-    // Takım silme
     function removeTeam() {
         const removeTeam = document.getElementById("removeTeamSelect").value;
         teams = teams.filter(team => team !== removeTeam);
@@ -146,45 +144,11 @@
         alert(`${removeTeam} başarıyla silindi!`);
     }
 
-    // Skor güncelleme
-    function updateScore() {
-        const team1 = document.getElementById("team1Select").value;
-        const team2 = document.getElementById("team2Select").value;
-        const team1Score = parseInt(document.getElementById("team1Score").value);
-        const team2Score = parseInt(document.getElementById("team2Score").value);
-
-        let team1Data = JSON.parse(localStorage.getItem(team1));
-        let team2Data = JSON.parse(localStorage.getItem(team2));
-
-        team1Data.games++;
-        team2Data.games++;
-
-        team1Data.goals += team1Score;
-        team2Data.goals += team2Score;
-        team1Data.conceded += team2Score;
-        team2Data.conceded += team1Score;
-
-        team1Data.goalDiff = team1Data.goals - team1Data.conceded;
-        team2Data.goalDiff = team2Data.goals - team2Data.conceded;
-
-        if (team1Score > team2Score) { team1Data.wins++; team1Data.points += 3; team2Data.losses++; }
-        else if (team1Score < team2Score) { team2Data.wins++; team2Data.points += 3; team1Data.losses++; }
-        else { team1Data.draws++; team2Data.draws++; team1Data.points++; team2Data.points++; }
-
-        localStorage.setItem(team1, JSON.stringify(team1Data));
-        localStorage.setItem(team2, JSON.stringify(team2Data));
-
+    window.onload = function() {
         populateTable();
-        sortTableByPoints();
-    }
+        populateDropdowns();
+    };
+</script>
 
-    // Tabloyu puan ve averaja göre sırala
-    function sortTableByPoints() {
-        const tableBody = document.getElementById("teamBody");
-        const rows = Array.from(tableBody.getElementsByTagName("tr"));
-
-        rows.sort((a, b) => {
-            const pointsA = parseInt(a.querySelector(".points").textContent);
-            const pointsB = parseInt(b.querySelector(".points").textContent);
-            const goalDiffA = parseInt(a.querySelector(".goalDiff").textContent);
-            const goal
+</body>
+</html>
