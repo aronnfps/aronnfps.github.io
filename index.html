@@ -70,12 +70,8 @@
     <button onclick="resetScores()">Puanları Sıfırla</button>
 </div>
 
-<!-- YouTube Şampiyonlar Ligi Müziği -->
-<div id="audioContainer" style="display:none;">
-    <iframe id="audioPlayer" width="0" height="0" src="https://www.youtube.com/embed/xw7Z3wUV2CU?autoplay=1&mute=1&loop=1&playlist=xw7Z3wUV2CU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-</div>
-
-<button onclick="playMusic()">Müziği Başlat</button>
+<h2>Şampiyonlar Ligi Müziği</h2>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4DPjZs1Jjw5mQ41w0xt9KA?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 <script>
     let teams = JSON.parse(localStorage.getItem("teams")) || [
@@ -202,12 +198,6 @@
 
         populateTable();
         alert("Tüm takımların puanları sıfırlandı!");
-    }
-
-    // Müziği başlatan fonksiyon
-    function playMusic() {
-        const audioContainer = document.getElementById('audioContainer');
-        audioContainer.style.display = 'block'; // Müzik çalmaya başlar
     }
 
     window.onload = function() {
