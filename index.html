@@ -78,8 +78,17 @@
     function populateTable() {
         const tableBody = document.getElementById("teamBody");
         tableBody.innerHTML = "";
-        teams.forEach((team, index) => {
-            let teamData = JSON.parse(localStorage.getItem(team)) || {
+
+        const sortedTeams = [...teams].sort((a, b) => {
+            const dataA = JSON.parse(localStorage.getItem(a)) || { points: 0, goalDiff: 0 };
+            const dataB = JSON.parse(localStorage.getItem(b)) || { points: 0, goalDiff: 0 };
+
+            if (dataB.points !== dataA.points) return dataB.points - dataA.points;
+            return dataB.goalDiff - dataA.goalDiff;
+        });
+
+        sortedTeams.forEach((team, index) => {
+            const teamData = JSON.parse(localStorage.getItem(team)) || {
                 games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
             };
             let row = `<tr id="${team}">
@@ -93,7 +102,7 @@
                 <td class="conceded">${teamData.conceded}</td>
                 <td class="goalDiff">${teamData.goalDiff}</td>
                 <td class="points">${teamData.points}</td>
-                <td class="td">${teamData.td}</td> <!-- Teknik Direktör için boş sütun -->
+                <td class="td">${teamData.td}</td>
             </tr>`;
             tableBody.innerHTML += row;
         });
@@ -125,7 +134,9 @@
 
         teams.push(newTeam);
         localStorage.setItem("teams", JSON.stringify(teams));
-        localStorage.setItem(newTeam, JSON.stringify({games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""}));
+        localStorage.setItem(newTeam, JSON.stringify({
+            games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
+        }));
 
         populateTable();
         populateDropdowns();
@@ -172,27 +183,18 @@
         localStorage.setItem(team2, JSON.stringify(team2Data));
 
         populateTable();
-        sortTableByPoints();
     }
 
-    function sortTableByPoints() {
-        const tableBody = document.getElementById("teamBody");
-        const rows = Array.from(tableBody.getElementsByTagName("tr"));
-
-        rows.sort((a, b) => {
-            const pointsA = parseInt(a.querySelector(".points").textContent);
-            const pointsB = parseInt(b.querySelector(".points").textContent);
-            const goalDiffA = parseInt(a.querySelector(".goalDiff").textContent);
-            const goalDiffB = parseInt(b.querySelector(".goalDiff").textContent);
-
-            if (pointsB !== pointsA) return pointsB - pointsA;
-            return goalDiffB - goalDiffA;
+    function resetScores() {
+        teams.forEach(team => {
+            const resetData = {
+                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
+            };
+            localStorage.setItem(team, JSON.stringify(resetData));
         });
 
-        rows.forEach((row, index) => {
-            row.cells[0].textContent = index + 1;
-            tableBody.appendChild(row);
-        });
+        populateTable();
+        alert("Tüm takımların puanları sıfırlandı!");
     }
 
     window.onload = function() {
