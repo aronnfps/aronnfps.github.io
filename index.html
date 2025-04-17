@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: url('https://i.hizliresim.com/qoh3lui.png') no-repeat center center fixed; /* Yeni arka plan resmi */
+            background: url('https://i.hizliresim.com/qoh3lui.png') no-repeat center center fixed; /* Anasayfa için arka plan */
             background-size: cover;
             margin: 0;
             padding: 0;
@@ -55,20 +55,18 @@
             cursor: pointer;
             margin: 5px;
         }
-        button {
-            padding: 8px 12px;
-            font-size: 16px;
-            cursor: pointer;
-        }
         iframe {
             margin-top: 30px;
         }
         #homePage {
-            display: none;
-            background: url('https://i.hizliresim.com/qoh3lui.png') no-repeat center center fixed; /* Yeni arka plan resmi */
+            display: block;
+            background: url('https://i.hizliresim.com/qoh3lui.png') no-repeat center center fixed; /* Anasayfa için arka plan */
             background-size: cover;
         }
-        /* Yeni stil ekleniyor */
+        #scorePage {
+            display: none;
+            background-color: white; /* Puan durumu sayfası için beyaz arka plan */
+        }
         .ucl-logo {
             width: 60px;
             margin-top: 10px;
@@ -91,7 +89,7 @@
     </div>
 
     <!-- Puan Durumu Sayfası -->
-    <div id="scorePage" class="content" style="display: none;">
+    <div id="scorePage" class="content">
         <h1>RB PRO LİG - Puan Durumu</h1>
 
         <!-- Yönetici Girişi -->
@@ -315,7 +313,6 @@
         }
 
         window.onload = () => {
-            showScorePage();  // Sayfa yüklendiğinde direkt olarak puan durumu sayfasını göster
             populateTable();
             populateDropdowns();
         };
