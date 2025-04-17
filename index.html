@@ -22,9 +22,10 @@
       color: white;
     }
 
-    tr:nth-child(even) {
-      background-color: #f0f0f0;
-    }
+    tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
+
     .input-container {
       margin-top: 20px;
       text-align: center;
@@ -56,7 +57,7 @@
     </tr>
   </thead>
   <tbody>
-    <!-- 12 Takım için satırlar -->
+    <!-- 12 Takım için satırlar (initial olarak 12 takım ekliyoruz) -->
     <tr id="team1">
       <td>1</td>
       <td>Paris Saint-Germain</td>
@@ -81,15 +82,29 @@
       <td class="goalDiff">0</td>
       <td class="points">0</td>
     </tr>
-    <!-- Diğer 10 takımın satırlarını buraya ekleyebilirsin -->
+    <tr id="team3">
+      <td>3</td>
+      <td>Liverpool</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <!-- 9 diğer takım satırlarını buraya ekle... -->
   </tbody>
 </table>
+
 <div class="input-container">
   <h2>Maç Sonucu Girin</h2>
   <label for="team1">Takım 1:</label>
   <select id="team1Select">
     <option value="team1">Paris Saint-Germain</option>
     <option value="team2">Chelsaa</option>
+    <option value="team3">Liverpool</option>
     <!-- Diğer takımlar buraya eklenmeli... -->
   </select>
 
@@ -97,6 +112,7 @@
   <select id="team2Select">
     <option value="team2">Chelsaa</option>
     <option value="team1">Paris Saint-Germain</option>
+    <option value="team3">Liverpool</option>
     <!-- Diğer takımlar buraya eklenmeli... -->
   </select>
 
@@ -111,6 +127,11 @@
 </div>
 
 <script>
+  // Sayfa yüklendiğinde mevcut verileri localStorage'dan al
+  window.onload = function() {
+    loadTable();
+  };
+
   // Takımların istatistiklerini güncelleyen fonksiyon
   function updateScore() {
     const team1Select = document.getElementById("team1Select").value;
@@ -164,7 +185,7 @@
     // Goller
     team1Goals += team1Score;
     team1Conceded += team2Score;
-    team2Goals += team2Score;
+    team2Goals += team2Score;
     team2Conceded += team1Score;
 
     // Gol averajı
@@ -178,7 +199,7 @@
     team1Row.querySelector(".losses").textContent = team1Losses;
     team1Row.querySelector(".goals").textContent = team1Goals;
     team1Row.querySelector(".conceded").textContent = team1Conceded;
-    team1Row.querySelector(".goalDiff").textContent = team1GoalDiff;
+    team1Row.querySelector(".goalDiff").textContent = team1GoalDiff;
     team1Row.querySelector(".points").textContent = team1Points;
 
     team2Row.querySelector(".games").textContent = team2Games;
@@ -189,6 +210,54 @@
     team2Row.querySelector(".conceded").textContent = team2Conceded;
     team2Row.querySelector(".goalDiff").textContent = team2GoalDiff;
     team2Row.querySelector(".points").textContent = team2Points;
+
+    // Verileri localStorage'a kaydet
+    saveToLocalStorage();
+    }
+
+  // localStorage'a takımların verilerini kaydet
+  function saveToLocalStorage() {
+    const tableRows = document.querySelectorAll('#teamTable tbody tr');
+    let teamData = [];
+
+    tableRows.forEach(row => {
+      teamData.push({
+        name: row.cells[1].textContent,
+        games: row.cells[2].textContent,
+        wins: row.cells[3].textContent,
+        draws: row.cells[4].textContent,
+        losses: row.cells[5].textContent,
+        goals: row.cells[6].textContent,
+        conceded: row.cells[7].textContent,
+        goalDiff: row.cells[8].textContent,
+        points: row.cells[9].textContent
+      });
+    });
+
+    localStorage.setItem('teamData', JSON.stringify(teamData));
+  }
+
+  // localStorage'dan verileri yükle
+  function loadTable() {
+    const savedData = localStorage.getItem('teamData');
+
+    if (savedData) {
+      const teamData = JSON.parse(savedData);
+      const tableRows = document.querySelectorAll('#teamTable tbody tr');
+
+      teamData.forEach((team, index) => {
+        if (tableRows[index]) {
+          tableRows[index].cells[2].textContent = team.games;
+          tableRows[index].cells[3].textContent = team.wins;
+          tableRows[index].cells[4].textContent = team.draws;
+          tableRows[index].cells[5].textContent = team.losses;
+          tableRows[index].cells[6].textContent = team.goals;
+          tableRows[index].cells[7].textContent = team.conceded;
+          tableRows[index].cells[8].textContent = team.goalDiff;
+          tableRows[index].cells[9].textContent = team.points;
+        }
+      });
+    }
   }
 </script>
 
