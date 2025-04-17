@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-scale, initial-scale=1.0">
     <title>RB PRO LİG - Puan Durumu</title>
     <style>
         body {
@@ -89,6 +89,10 @@
             color: #1a2a6c;
             text-transform: uppercase;
         }
+
+        #clearArchivedButton, #updateButton {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -159,38 +163,43 @@
                 <input type="number" id="archiveWeek" placeholder="Arşivlenecek Hafta" value="1">
                 <button onclick="archiveWeek()">Haftayı Arşivle</button>
             </div>
+        </div>
 
-            <h3>Fikstür</h3>
-            <table id="fixturesTable">
-                <thead>
-                    <tr>
-                        <th>Hafta</th>
-                        <th>Maç</th>
-                        <th>Takım 1</th>
-                        <th>Takım 2</th>
-                        <th>Skor</th>
-                    </tr>
-                </thead>
-                <tbody id="fixturesBody"></tbody>
-            </table>
+        <h3>Fikstür</h3>
+        <table id="fixturesTable">
+            <thead>
+                <tr>
+                    <th>Hafta</th>
+                    <th>Maç</th>
+                    <th>Takım 1</th>
+                    <th>Takım 2</th>
+                    <th>Skor</th>
+                </tr>
+            </thead>
+            <tbody id="fixturesBody"></tbody>
+        </table>
 
-            <h3>Arşivlenen Haftalar</h3>
-            <table id="archivedFixturesTable">
-                <thead>
-                    <tr>
-                        <th>Hafta</th>
-                        <th>Takım 1</th>
-                        <th>Takım 2</th>
-                        <th>Skor</th>
-                    </tr>
-                </thead>
-                <tbody id="archivedFixturesBody">
-                    <!-- Burada Arşivlenen Haftalar Boş -->
-                </tbody>
-            </table>
-            <div class="input-container">
-                <button onclick="clearArchivedFixtures()">Arşivlenen Haftaları Temizle</button>
-            </div>
+        <h3>Arşivlenen Haftalar</h3>
+        <table id="archivedFixturesTable">
+            <thead>
+                <tr>
+                    <th>Hafta</th>
+                    <th>Takım 1</th>
+                    <th>Takım 2</th>
+                    <th>Skor</th>
+                </tr>
+            </thead>
+            <tbody id="archivedFixturesBody">
+                <!-- Burada Arşivlenen Haftalar Boş -->
+            </tbody>
+        </table>
+
+        <div class="input-container">
+            <button id="clearArchivedButton" onclick="clearArchivedFixtures()">Arşivlenen Haftaları Temizle</button>
+        </div>
+
+        <div class="input-container">
+            <button id="updateButton" onclick="updateFixture()">Güncelle</button>
         </div>
 
         <table id="teamTable">
@@ -245,6 +254,8 @@
             const password = document.getElementById("password").value;
             if (username === correctUsername && password === correctPassword) {
                 document.getElementById("adminSection").style.display = "block";
+                document.getElementById("clearArchivedButton").style.display = "block"; // Admin giriş yaptıktan sonra buton görünür
+                document.getElementById("updateButton").style.display = "block"; // Güncelle butonunu da gösteriyoruz
                 alert("Giriş başarılı!");
             } else {
                 alert("Yanlış kullanıcı adı veya şifre!");
@@ -309,12 +320,12 @@
             const team2 = document.getElementById("matchTeam2Select").value;
             const week = document.getElementById("matchWeek").value;
 
-            if (team1 === team2) {
-                alert("Aynı takımlar arasında maç yapılamaz!");
+            if (!team1 || !team2 || !week) {
+                alert("Tüm alanları doldurun.");
                 return;
             }
 
-            fixtures.push({ week: week, team1: team1, team2: team2, score1: null, score2: null });
+            fixtures.push({ week, team1, team2, team1Score: 0, team2Score: 0 });
             localStorage.setItem("fixtures", JSON.stringify(fixtures));
             populateFixtures();
         }
@@ -322,31 +333,27 @@
         function populateFixtures() {
             const fixturesBody = document.getElementById("fixturesBody");
             fixturesBody.innerHTML = "";
-            fixtures.forEach((fixture, index) => {
-                let row = `<tr>
-                    <td>Hafta ${fixture.week}</td>
-                    <td>Maç ${index + 1}</td>
-                    <td>${fixture.team1}</td>
-                    <td>${fixture.team2}</td>
-                    <td>
-                        <input type="number" value="${fixture.score1 || ''}" id="score1-${index}" placeholder="Skor 1">
-                        -
-                        <input type="number" value="${fixture.score2 || ''}" id="score2-${index}" placeholder="Skor 2">
-                        <button onclick="updateFixtureScore(${index})">Güncelle</button>
-                    </td>
+            fixtures.forEach(fixture => {
+                const row = `<tr>
+                    <td>${fixture.week}</td>
+                    <td>${fixture.team1} vs ${fixture.team2}</td>
+                    <td><input type="number" value="${fixture.team1Score}" data-week="${fixture.week}" data-team="team1"></td>
+                    <td><input type="number" value="${fixture.team2Score}" data-week="${fixture.week}" data-team="team2"></td>
                 </tr>`;
                 fixturesBody.innerHTML += row;
             });
         }
 
-        function updateFixtureScore(index) {
-            const score1 = document.getElementById(`score1-${index}`).value;
-            const score2 = document.getElementById(`score2-${index}`).value;
-
-            fixtures[index].score1 = score1;
-            fixtures[index].score2 = score2;
+        function updateFixture() {
+            const inputs = document.querySelectorAll("input[type='number']");
+            inputs.forEach(input => {
+                const week = input.dataset.week;
+                const team = input.dataset.team;
+                const fixture = fixtures.find(f => f.week === week);
+                if (team === "team1") fixture.team1Score = input.value;
+                else fixture.team2Score = input.value;
+            });
             localStorage.setItem("fixtures", JSON.stringify(fixtures));
-            populateFixtures();
         }
 
         function clearFixtures() {
@@ -356,24 +363,32 @@
         }
 
         function archiveWeek() {
-            const weekToArchive = document.getElementById("archiveWeek").value;
-            if (weekToArchive) {
-                const fixturesForWeek = fixtures.filter(fixture => fixture.week === weekToArchive);
-                archivedFixtures.push(...fixturesForWeek);
-                localStorage.setItem("archivedFixtures", JSON.stringify(archivedFixtures));
-                populateArchivedFixtures();
+            const week = document.getElementById("archiveWeek").value;
+            if (!week) {
+                alert("Hafta numarası girin.");
+                return;
             }
+
+            const fixture = fixtures.find(f => f.week == week);
+            if (!fixture) {
+                alert("Bu hafta bulunamadı.");
+                return;
+            }
+
+            archivedFixtures.push(fixture);
+            localStorage.setItem("archivedFixtures", JSON.stringify(archivedFixtures));
+            populateArchivedFixtures();
         }
 
         function populateArchivedFixtures() {
             const archivedFixturesBody = document.getElementById("archivedFixturesBody");
             archivedFixturesBody.innerHTML = "";
             archivedFixtures.forEach(fixture => {
-                let row = `<tr>
-                    <td>Hafta ${fixture.week}</td>
+                const row = `<tr>
+                    <td>${fixture.week}</td>
                     <td>${fixture.team1}</td>
                     <td>${fixture.team2}</td>
-                    <td>${fixture.score1 !== null && fixture.score2 !== null ? `${fixture.score1} - ${fixture.score2}` : ''}</td>
+                    <td>${fixture.team1Score} - ${fixture.team2Score}</td>
                 </tr>`;
                 archivedFixturesBody.innerHTML += row;
             });
@@ -385,12 +400,11 @@
             populateArchivedFixtures();
         }
 
-        window.onload = () => {
-            populateTable();
-            populateDropdowns();
-            populateFixtures();
-            populateArchivedFixtures();
-        };
+        // İlk sayfa yüklendiğinde her şeyin doğru şekilde görünmesini sağlamak için
+        populateTable();
+        populateDropdowns();
+        populateFixtures();
+        populateArchivedFixtures();
     </script>
 </body>
 </html>
