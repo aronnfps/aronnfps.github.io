@@ -235,3 +235,13 @@
     team2Row.querySelector(".points").textContent = team2Data.points;
 
     // Verileri localStorage'a kaydet
+// Verileri localStorage'a kaydet
+    localStorage.setItem(team1Select, JSON.stringify(team1Data));
+    localStorage.setItem(team2Select, JSON.stringify(team2Data));
+
+    // Puan durumu ve maç sonucu güncellenmiş halde
+    loadScores();
+  }
+</script>
+
+</body>
