@@ -34,8 +34,7 @@
             <th>Puan</th>
         </tr>
     </thead>
-    <tbody id="teamBody">
-    </tbody>
+    <tbody id="teamBody"></tbody>
 </table>
 
 <h2>Takım Yönetimi</h2>
@@ -43,6 +42,12 @@
     <label>Yeni Takım Adı:</label>
     <input type="text" id="newTeamName" placeholder="Takım Adı">
     <button onclick="addTeam()">Takım Ekle</button>
+</div>
+
+<div class="input-container">
+    <label>Takım Sil:</label>
+    <select id="removeTeamSelect"></select>
+    <button onclick="removeTeam()">Takım Sil</button>
 </div>
 
 <h2>Maç Sonucu Girin</h2>
@@ -93,13 +98,17 @@
     function populateDropdowns() {
         const team1Select = document.getElementById("team1Select");
         const team2Select = document.getElementById("team2Select");
+        const removeSelect = document.getElementById("removeTeamSelect");
+
         team1Select.innerHTML = "";
         team2Select.innerHTML = "";
+        removeSelect.innerHTML = "";
+
         teams.forEach(team => {
-            let option1 = `<option value="${team}">${team}</option>`;
-            let option2 = `<option value="${team}">${team}</option>`;
-            team1Select.innerHTML += option1;
-            team2Select.innerHTML += option2;
+            let option = `<option value="${team}">${team}</option>`;
+            team1Select.innerHTML += option;
+            team2Select.innerHTML += option;
+            removeSelect.innerHTML += option;
         });
     }
 
@@ -120,61 +129,15 @@
         document.getElementById("newTeamName").value = "";
     }
 
-    function updateScore() {
-        const team1 = document.getElementById("team1Select").value;
-        const team2 = document.getElementById("team2Select").value;
-        const team1Score = parseInt(document.getElementById("team1Score").value);
-        const team2Score = parseInt(document.getElementById("team2Score").value);
-
-        let team1Data = JSON.parse(localStorage.getItem(team1));
-        let team2Data = JSON.parse(localStorage.getItem(team2));
-
-        team1Data.games++;
-        team2Data.games++;
-
-        team1Data.goals += team1Score;
-        team2Data.goals += team2Score;
-        team1Data.conceded += team2Score;
-        team2Data.conceded += team1Score;
-
-        team1Data.goalDiff = team1Data.goals - team1Data.conceded;
-        team2Data.goalDiff = team2Data.goals - team2Data.conceded;
-
-        if (team1Score > team2Score) { team1Data.wins++; team1Data.points += 3; team2Data.losses++; }
-        else if (team1Score < team2Score) { team2Data.wins++; team2Data.points += 3; team1Data.losses++; }
-        else { team1Data.draws++; team2Data.draws++; team1Data.points++; team2Data.points++; }
-
-        localStorage.setItem(team1, JSON.stringify(team1Data));
-        localStorage.setItem(team2, JSON.stringify(team2Data));
+    function removeTeam() {
+        const removeTeam = document.getElementById("removeTeamSelect").value;
+        teams = teams.filter(team => team !== removeTeam);
+        localStorage.setItem("teams", JSON.stringify(teams));
+        localStorage.removeItem(removeTeam);
 
         populateTable();
-        sortTableByPoints();
-    }
-
-    function sortTableByPoints() {
-        const tableBody = document.getElementById("teamBody");
-        const rows = Array.from(tableBody.getElementsByTagName("tr"));
-
-        rows.sort((a, b) => {
-            const pointsA = parseInt(a.querySelector(".points").textContent);
-            const pointsB = parseInt(b.querySelector(".points").textContent);
-            return pointsB - pointsA; // Büyük olan puan üste geçiyor
-        });
-
-        rows.forEach((row, index) => {
-            row.cells[0].textContent = index + 1; // Sıra numarasını güncelle
-            tableBody.appendChild(row);
-        });
-    }
-
-    function resetScores() {
-        teams.forEach(team => {
-            const resetData = {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
-            localStorage.setItem(team, JSON.stringify(resetData));
-        });
-        populateTable();
-        sortTableByPoints();
-        alert("Tüm puanlar sıfırlandı!");
+        populateDropdowns();
+        alert(`${removeTeam} başarıyla silindi!`);
     }
 
     window.onload = function() {
