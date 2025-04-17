@@ -68,7 +68,6 @@
             background-color: white;
         }
 
-        /* Buton stilini ayarlama */
         button {
             padding: 15px 30px;
             font-size: 24px;
@@ -85,7 +84,6 @@
             background-color: #333;
         }
 
-        /* Okey Turnuvası Sayfası */
         #tournamentPage h1 {
             font-size: 50px;
             color: #1a2a6c;
@@ -94,22 +92,16 @@
     </style>
 </head>
 <body>
-    <!-- Anasayfa Butonları -->
     <div style="margin-top: 50px;">
         <button onclick="showScorePage()">RB PRO LİG</button>
         <button onclick="showTournamentPage()">101 OKEY</button>
     </div>
 
-    <!-- Anasayfa İçeriği -->
-    <div id="homePage" class="content">
-        <!-- Anasayfa İçeriği Kaldırıldı -->
-    </div>
+    <div id="homePage" class="content"></div>
 
-    <!-- Puan Durumu Sayfası -->
     <div id="scorePage" class="content">
         <h1>RB PRO LİG - Puan Durumu</h1>
 
-        <!-- Yönetici Girişi -->
         <h2>Yönetici Girişi</h2>
         <div class="input-container">
             <input type="text" id="username" placeholder="Kullanıcı Adı">
@@ -117,7 +109,6 @@
             <button onclick="adminLogin()">Giriş Yap</button>
         </div>
 
-        <!-- Yönetici Bölümü (Başlangıçta Gizli) -->
         <div id="adminSection" style="display: none;">
             <h2>Takım Yönetimi</h2>
             <div class="input-container">
@@ -153,9 +144,55 @@
                 <button onclick="updateScore()">Skoru Güncelle</button>
                 <button onclick="resetScores()">Puanları Sıfırla</button>
             </div>
+
+            <h2>Fikstür Ekleme</h2>
+            <div class="input-container">
+                <select id="matchTeam1Select"></select>
+                <select id="matchTeam2Select"></select>
+                <input type="number" id="matchWeek" placeholder="Hafta" value="1">
+                <button onclick="addFixture()">Fikstür Ekle</button>
+                <button onclick="clearFixtures()">Fikstür Temizle</button>
+            </div>
+
+            <h2>Arşivle</h2>
+            <div class="input-container">
+                <input type="number" id="archiveWeek" placeholder="Arşivlenecek Hafta" value="1">
+                <button onclick="archiveWeek()">Haftayı Arşivle</button>
+            </div>
+
+            <h3>Fikstür</h3>
+            <table id="fixturesTable">
+                <thead>
+                    <tr>
+                        <th>Hafta</th>
+                        <th>Maç</th>
+                        <th>Takım 1</th>
+                        <th>Takım 2</th>
+                        <th>Skor</th>
+                    </tr>
+                </thead>
+                <tbody id="fixturesBody"></tbody>
+            </table>
+
+            <h3>Arşivlenen Haftalar</h3>
+            <table id="archivedFixturesTable">
+                <thead>
+                    <tr>
+                        <th>Hafta</th>
+                        <th>Takım 1</th>
+                        <th>Takım 2</th>
+                        <th>Skor</th>
+                    </tr>
+                </thead>
+                <tbody id="archivedFixturesBody">
+                    <!-- Burada Arşivlenen Haftalar Boş -->
+                </tbody>
+            </table>
+            <div class="input-container">
+                <button onclick="clearArchivedFixtures()">Arşivlenen Haftaları Temizle</button>
+            </div>
         </div>
 
-        <!-- Puan Durumu Tablosu -->
         <table id="teamTable">
             <thead>
                 <tr>
@@ -174,16 +211,13 @@
             <tbody id="teamBody"></tbody>
         </table>
 
-        <!-- Şampiyonlar Ligi Müzik -->
         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 
-    <!-- 101 OKEY Sayfası -->
     <div id="tournamentPage" class="content">
         <h1>YAKINDA</h1>
     </div>
 
-    <!-- JavaScript Kısmı -->
     <script>
         function showHomePage() {
             document.getElementById("homePage").style.display = "block";
@@ -218,6 +252,8 @@
         }
 
         let teams = JSON.parse(localStorage.getItem("teams")) || ["Paris Saint-Germain", "Chelsea", "Liverpool"];
+        let fixtures = JSON.parse(localStorage.getItem("fixtures")) || [];
+        let archivedFixtures = JSON.parse(localStorage.getItem("archivedFixtures")) || [];
 
         function populateTable() {
             const tableBody = document.getElementById("teamBody");
@@ -252,7 +288,8 @@
 
         function populateDropdowns() {
             const selects = [
-                "team1Select", "team2Select", "removeTeamSelect", "selectTeamForTD", "removeTDSelect"
+                "team1Select", "team2Select", "removeTeamSelect", "selectTeamForTD", "removeTDSelect",
+                "matchTeam1Select", "matchTeam2Select"
             ];
             selects.forEach(id => document.getElementById(id).innerHTML = "");
 
@@ -267,84 +304,92 @@
             });
         }
 
-        function addTeam() {
-            const newTeam = document.getElementById("newTeamName").value.trim();
-            if (!newTeam || teams.includes(newTeam)) return alert("Geçerli bir takım adı gir!");
-            teams.push(newTeam);
-            localStorage.setItem("teams", JSON.stringify(teams));
-            localStorage.setItem(newTeam, JSON.stringify({
-                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
-            }));
-            populateTable();
-            populateDropdowns();
-            document.getElementById("newTeamName").value = "";
+        function addFixture() {
+            const team1 = document.getElementById("matchTeam1Select").value;
+            const team2 = document.getElementById("matchTeam2Select").value;
+            const week = document.getElementById("matchWeek").value;
+
+            if (team1 === team2) {
+                alert("Aynı takımlar arasında maç yapılamaz!");
+                return;
+            }
+
+            fixtures.push({ week: week, team1: team1, team2: team2, score1: null, score2: null });
+            localStorage.setItem("fixtures", JSON.stringify(fixtures));
+            populateFixtures();
         }
 
-        function removeTeam() {
-            const team = document.getElementById("removeTeamSelect").value;
-            teams = teams.filter(t => t !== team);
-            localStorage.setItem("teams", JSON.stringify(teams));
-            localStorage.removeItem(team);
-            populateTable();
-            populateDropdowns();
-        }
-
-        function addTD() {
-            const team = document.getElementById("selectTeamForTD").value;
-            const tdName = document.getElementById("newTD").value.trim();
-            if (!tdName) return alert("Yönetici adı girin!");
-            let data = JSON.parse(localStorage.getItem(team));
-            data.td = tdName;
-            localStorage.setItem(team, JSON.stringify(data));
-            populateTable();
-            document.getElementById("newTD").value = "";
-        }
-
-        function removeTD() {
-            const team = document.getElementById("removeTDSelect").value;
-            let data = JSON.parse(localStorage.getItem(team));
-            data.td = "";
-            localStorage.setItem(team, JSON.stringify(data));
-            populateTable();
-        }
-
-        function updateScore() {
-            const t1 = document.getElementById("team1Select").value;
-            const t2 = document.getElementById("team2Select").value;
-            const s1 = parseInt(document.getElementById("team1Score").value);
-            const s2 = parseInt(document.getElementById("team2Score").value);
-
-            let d1 = JSON.parse(localStorage.getItem(t1));
-            let d2 = JSON.parse(localStorage.getItem(t2));
-
-            d1.games++; d2.games++;
-            d1.goals += s1; d1.conceded += s2;
-            d2.goals += s2; d2.conceded += s1;
-
-            d1.goalDiff = d1.goals - d1.conceded;
-            d2.goalDiff = d2.goals - d2.conceded;
-
-            if (s1 > s2) { d1.wins++; d1.points += 3; d2.losses++; }
-            else if (s1 < s2) { d2.wins++; d2.points += 3; d1.losses++; }
-            else { d1.draws++; d2.draws++; d1.points++; d2.points++; }
-
-            localStorage.setItem(t1, JSON.stringify(d1));
-            localStorage.setItem(t2, JSON.stringify(d2));
-            populateTable();
-        }
-
-        function resetScores() {
-            teams.forEach(team => {
-                let d = JSON.parse(localStorage.getItem(team));
-                d = { games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: d.td };
-                localStorage.setItem(team, JSON.stringify(d));
+        function populateFixtures() {
+            const fixturesBody = document.getElementById("fixturesBody");
+            fixturesBody.innerHTML = "";
+            fixtures.forEach((fixture, index) => {
+                let row = `<tr>
+                    <td>Hafta ${fixture.week}</td>
+                    <td>Maç ${index + 1}</td>
+                    <td>${fixture.team1}</td>
+                    <td>${fixture.team2}</td>
+                    <td>
+                        <input type="number" value="${fixture.score1 || ''}" id="score1-${index}" placeholder="Skor 1">
+                        -
+                        <input type="number" value="${fixture.score2 || ''}" id="score2-${index}" placeholder="Skor 2">
+                        <button onclick="updateFixtureScore(${index})">Güncelle</button>
+                    </td>
+                </tr>`;
+                fixturesBody.innerHTML += row;
             });
-            populateTable();
+        }
+
+        function updateFixtureScore(index) {
+            const score1 = document.getElementById(`score1-${index}`).value;
+            const score2 = document.getElementById(`score2-${index}`).value;
+
+            fixtures[index].score1 = score1;
+            fixtures[index].score2 = score2;
+            localStorage.setItem("fixtures", JSON.stringify(fixtures));
+            populateFixtures();
+        }
+
+        function clearFixtures() {
+            fixtures = [];
+            localStorage.setItem("fixtures", JSON.stringify(fixtures));
+            populateFixtures();
+        }
+
+        function archiveWeek() {
+            const weekToArchive = document.getElementById("archiveWeek").value;
+            if (weekToArchive) {
+                const fixturesForWeek = fixtures.filter(fixture => fixture.week === weekToArchive);
+                archivedFixtures.push(...fixturesForWeek);
+                localStorage.setItem("archivedFixtures", JSON.stringify(archivedFixtures));
+                populateArchivedFixtures();
+            }
+        }
+
+        function populateArchivedFixtures() {
+            const archivedFixturesBody = document.getElementById("archivedFixturesBody");
+            archivedFixturesBody.innerHTML = "";
+            archivedFixtures.forEach(fixture => {
+                let row = `<tr>
+                    <td>Hafta ${fixture.week}</td>
+                    <td>${fixture.team1}</td>
+                    <td>${fixture.team2}</td>
+                    <td>${fixture.score1 !== null && fixture.score2 !== null ? `${fixture.score1} - ${fixture.score2}` : ''}</td>
+                </tr>`;
+                archivedFixturesBody.innerHTML += row;
+            });
+        }
+
+        function clearArchivedFixtures() {
+            archivedFixtures = [];
+            localStorage.setItem("archivedFixtures", JSON.stringify(archivedFixtures));
+            populateArchivedFixtures();
         }
 
         window.onload = () => {
             populateTable();
             populateDropdowns();
+            populateFixtures();
+            populateArchivedFixtures();
         };
     </script>
 </body>
