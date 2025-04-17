@@ -3,382 +3,186 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RB PRO LİG - Puan Durumu</title>
+  <title>Futbol Puan Durumu</title>
   <style>
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
-
     th, td {
-      border: 1px solid #ccc;
+      border: 1px solid black;
       padding: 8px;
       text-align: center;
     }
-
     th {
-      background-color: #1a2a6c;
-      color: white;
+      background-color: #f2f2f2;
     }
-
-    tr:nth-child(even) {
-      background-color: #f0f0f0;
-    }
-
-    .input-container {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .input-container input, .input-container select {
-      padding: 5px;
-      margin: 5px;
+    .input-score {
+      width: 50px;
     }
   </style>
 </head>
 <body>
+  <h1>Futbol Puan Durumu</h1>
 
-<h1>RB PRO LİG - Puan Durumu</h1>
+  <table id="teamTable">
+    <thead>
+      <tr>
+        <th>Takım</th>
+        <th>O</th>
+        <th>G</th>
+        <th>B</th>
+        <th>M</th>
+        <th>AG</th>
+        <th>YG</th>
+        <th>Av</th>
+        <th>Puan</th>
+        <th>Skor</th>
+      </tr>
+    </thead>
+    <tbody id="teamBody">
+      <!-- Takım satırları buraya eklenecek -->
+    </tbody>
+  </table>
 
-<table id="teamTable">
-  <thead>
-    <tr>
-      <th>Sıra</th>
-      <th>Takım</th>
-      <th>O</th>
-      <th>G</th>
-      <th>B</th>
-      <th>M</th>
-      <th>AG</th>
-      <th>YG</th>
-      <th>Av</th>
-      <th>Puan</th>
-    </tr>
-  </thead>
-  <tbody id="teamBody">
-    <!-- 12 Takım için satırlar -->
-    <tr id="team1">
-      <td>1</td>
-      <td>Paris Saint-Germain</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team2">
-      <td>2</td>
-      <td>Chelsaa</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team3">
-      <td>3</td>
-      <td>Liverpool</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team4">
-      <td>4</td>
-      <td>Arsenal</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team5">
-      <td>5</td>
-      <td>Bayern Leverkusen</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team6">
-      <td>6</td>
-      <td>Real Madrid</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team7">
-      <td>7</td>
-      <td>Inter</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team8">
-      <td>8</td>
-      <td>Barcelona</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team9">
-      <td>9</td>
-      <td>Manchester City</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team10">
-      <td>10</td>
-      <td>Juventus</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team11">
-      <td>11</td>
-      <td>Atletico Madrid</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team12">
-      <td>12</td>
-      <td>AC Milan</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="input-container">
-  <h2>Maç Sonucu Girin</h2>
+  <h3>Maç Sonucu Gir</h3>
   <label for="team1">Takım 1:</label>
-  <select id="team1Select">
-    <option value="team1">Paris Saint-Germain</option>
-    <option value="team2">Chelsaa</option>
-    <option value="team3">Liverpool</option>
-    <option value="team4">Arsenal</option>
-    <option value="team5">Bayern Leverkusen</option>
-    <option value="team6">Real Madrid</option>
-    <option value="team7">Inter</option>
-    <option value="team8">Barcelona</option>
-    <option value="team9">Manchester City</option>
-    <option value="team10">Juventus</option>
-    <option value="team11">Atletico Madrid</option>
-    <option value="team12">AC Milan</option>
+  <select id="team1">
+    <option value="team1">Team 1</option>
+    <option value="team2">Team 2</option>
+    <option value="team3">Team 3</option>
+    <option value="team4">Team 4</option>
+    <option value="team5">Team 5</option>
+    <option value="team6">Team 6</option>
+    <option value="team7">Team 7</option>
+    <option value="team8">Team 8</option>
+    <option value="team9">Team 9</option>
+    <option value="team10">Team 10</option>
+    <option value="team11">Team 11</option>
+    <option value="team12">Team 12</option>
   </select>
 
   <label for="team2">Takım 2:</label>
-  <select id="team2Select">
-    <option value="team2">Chelsaa</option>
-    <option value="team1">Paris Saint-Germain</option>
-    <option value="team3">Liverpool</option>
-    <option value="team4">Arsenal</option>
-    <option value="team5">Bayern Leverkusen</option>
-    <option value="team6">Real Madrid</option>
-    <option value="team7">Inter</option>
-    <option value="team8">Barcelona</option>
-    <option value="team9">Manchester City</option>
-    <option value="team10">Juventus</option>
-    <option value="team11">Atletico Madrid</option>
-    <option value="team12">AC Milan</option>
+  <select id="team2">
+    <option value="team1">Team 1</option>
+    <option value="team2">Team 2</option>
+    <option value="team3">Team 3</option>
+    <option value="team4">Team 4</option>
+    <option value="team5">Team 5</option>
+    <option value="team6">Team 6</option>
+    <option value="team7">Team 7</option>
+    <option value="team8">Team 8</option>
+    <option value="team9">Team 9</option>
+    <option value="team10">Team 10</option>
+    <option value="team11">Team 11</option>
+    <option value="team12">Team 12</option>
   </select>
 
-  <br>
-  <label for="team1Score">Takım 1 Skoru:</label>
-  <input type="number" id="team1Score" value="0">
+  <label for="score1">Takım 1 Skoru:</label>
+  <input type="number" id="score1" class="input-score" min="0" value="0">
 
-  <label for="team2Score">Takım 2 Skoru:</label>
-  <input type="number" id="team2Score" value="0">
+  <label for="score2">Takım 2 Skoru:</label>
+  <input type="number" id="score2" class="input-score" min="0" value="0">
 
   <button onclick="updateScore()">Skoru Güncelle</button>
-</div>
 
-<script>
-  // Sayfa yüklendiğinde puan durumu ve maç sonuçlarını localStorage'dan alalım
-  window.onload = function() {
-    loadScores();
-  };
+  <script>
+    let teams = ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5", "Team 6", "Team 7", "Team 8", "Team 9", "Team 10", "Team 11", "Team 12"];
+    let teamData = {};
 
-  function loadScores() {
-    const teams = [
-      'team1', 'team2', 'team3', 'team4', 'team5', 'team6', 'team7', 'team8', 'team9', 'team10', 'team11', 'team12'
-    ];
-
-    teams.forEach(teamId => {
-      const teamData = JSON.parse(localStorage.getItem(teamId)) || {
-        games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
+    // Başlangıçta her takım için verileri oluştur
+    teams.forEach(team => {
+      teamData[team] = {
+        games: 0,
+        wins: 0,
+        draws: 0,
+        losses: 0,
+        goals: 0,
+        conceded: 0,
+        goalDiff: 0,
+        points: 0
       };
-
-      document.getElementById(teamId).querySelector('.games').textContent = teamData.games;
-      document.getElementById(teamId).querySelector('.wins').textContent = teamData.wins;
-      document.getElementById(teamId).querySelector('.draws').textContent = teamData.draws;
-      document.getElementById(teamId).querySelector('.losses').textContent = teamData.losses;
-      document.getElementById(teamId).querySelector('.goals').textContent = teamData.goals;
-      document.getElementById(teamId).querySelector('.conceded').textContent = teamData.conceded;
-      document.getElementById(teamId).querySelector('.goalDiff').textContent = teamData.goalDiff;
-      document.getElementById(teamId).querySelector('.points').textContent = teamData.points;
     });
-  }
 
-  function updateScore() {
-    const team1Select = document.getElementById("team1Select").value;
-    const team2Select = document.getElementById("team2Select").value;
-    const team1Score = parseInt(document.getElementById("team1Score").value);
-    const team2Score = parseInt(document.getElementById("team2Score").value);
+    // Verileri tabloya ekle
+    function populateTable() {
+      const tbody = document.getElementById("teamBody");
+      tbody.innerHTML = '';  // Var olan verileri temizle
 
-    const team1Row = document.getElementById(team1Select);
-    const team2Row = document.getElementById(team2Select);
+      teams.forEach(team => {
+        let row = document.createElement("tr");
 
-    let team1Data = {
-      games: parseInt(team1Row.querySelector(".games").textContent),
-      wins: parseInt(team1Row.querySelector(".wins").textContent),
-      draws: parseInt(team1Row.querySelector(".draws").textContent),
-      losses: parseInt(team1Row.querySelector(".losses").textContent),
-      goals: parseInt(team1Row.querySelector(".goals").textContent),
-      conceded: parseInt(team1Row.querySelector(".conceded").textContent),
-      goalDiff: parseInt(team1Row.querySelector(".goalDiff").textContent),
-      points: parseInt(team1Row.querySelector(".points").textContent)
-    };
-
-    let team2Data = {
-      games: parseInt(team2Row.querySelector(".games").textContent),
-      wins: parseInt(team2Row.querySelector(".wins").textContent),
-      draws: parseInt(team2Row.querySelector(".draws").textContent),
-      losses: parseInt(team2Row.querySelector(".losses").textContent),
-      goals: parseInt(team2Row.querySelector(".goals").textContent),
-      conceded: parseInt(team2Row.querySelector(".conceded").text
-                         conceded: parseInt(team2Row.querySelector(".conceded").textContent),
-      goalDiff: parseInt(team2Row.querySelector(".goalDiff").textContent),
-      points: parseInt(team2Row.querySelector(".points").textContent)
-    };
-
-    // Maçın sonuçlarını hesapla
-    team1Data.games++;
-    team2Data.games++;
-
-    if (team1Score > team2Score) {
-      team1Data.wins++;
-      team2Data.losses++;
-      team1Data.points += 3;
-    } else if (team1Score < team2Score) {
-      team2Data.wins++;
-      team1Data.losses++;
-      team2Data.points += 3;
-    } else {
-      team1Data.draws++;
-      team2Data.draws++;
-      team1Data.points++;
-      team2Data.points++;
+        row.innerHTML = `
+          <td>team</td>
+          <td class="games">{teamData[team].games}</td>
+          <td class="wins">teamData[team].wins</td>
+          <td class="draws">{teamData[team].draws}</td>
+          <td class="losses">teamData[team].losses</td>
+          <td class="goals">{teamData[team].goals}</td>
+          <td class="conceded">teamData[team].conceded</td>
+          <td class="goalDiff">{teamData[team].goalDiff}</td>
+          <td class="points">${teamData[team].points}</td>
+          <td></td>
+        `;
+        tbody.appendChild(row);
+      });
     }
 
-    // Goller ve gol farkını güncelle
-    team1Data.goals += team1Score;
-    team2Data.goals += team2Score;
-    team1Data.conceded += team2Score;
-    team2Data.conceded += team1Score;
+    // Skor güncelleme fonksiyonu
+    function updateScore() {
+      const team1Select = document.getElementById("team1").value;
+      const team2Select = document.getElementById("team2").value;
+      const score1 = parseInt(document.getElementById("score1").value);
+      const score2 = parseInt(document.getElementById("score2").value);
 
-    team1Data.goalDiff = team1Data.goals - team1Data.conceded;
-    team2Data.goalDiff = team2Data.goals - team2Data.conceded;
+      // Maç verilerini güncelle
+      teamData[team1Select].games++;
+      teamData[team2Select].games++;
 
-    // Takım verilerini localStorage'a kaydet
-    localStorage.setItem(team1Select, JSON.stringify(team1Data));
-    localStorage.setItem(team2Select, JSON.stringify(team2Data));
+      if (score1 > score2) {
+        teamData[team1Select].wins++;
+        teamData[team2Select].losses++;
+        teamData[team1Select].points += 3;
+      } else if (score1 < score2) {
+        teamData[team2Select].wins++;
+        teamData[team1Select].losses++;
+        teamData[team2Select].points += 3;
+      } else {
+        teamData[team1Select].draws++;
+        teamData[team2Select].draws++;
+        teamData[team1Select].points++;
+        teamData[team2Select].points++;
+        }
 
-    // Tabloyu güncelle
-  team1Row.querySelector(".games").textContent = team1Data.games;
-    team1Row.querySelector(".wins").textContent = team1Data.wins;
-    team1Row.querySelector(".draws").textContent = team1Data.draws;
-    team1Row.querySelector(".losses").textContent = team1Data.losses;
-    team1Row.querySelector(".goals").textContent = team1Data.goals;
-    team1Row.querySelector(".conceded").textContent = team1Data.conceded;
-    team1Row.querySelector(".goalDiff").textContent = team1Data.goalDiff;
-    team1Row.querySelector(".points").textContent = team1Data.points;
+      // Goller ve gol farklarını güncelle
+      teamData[team1Select].goals += score1;
+      teamData[team2Select].goals += score2;
+      teamData[team1Select].conceded += score2;
+      teamData[team2Select].conceded += score1;
 
-    team2Row.querySelector(".games").textContent = team2Data.games;
-    team2Row.querySelector(".wins").textContent = team2Data.wins;
-    team2Row.querySelector(".draws").textContent = team2Data.draws;
-    team2Row.querySelector(".losses").textContent = team2Data.losses;
-    team2Row.querySelector(".goals").textContent = team2Data.goals;
-    team2Row.querySelector(".conceded").textContent = team2Data.conceded;
-    team2Row.querySelector(".goalDiff").textContent = team2Data.goalDiff;
-    team2Row.querySelector(".points").textContent = team2Data.points;
+      teamData[team1Select].goalDiff = teamData[team1Select].goals - teamData[team1Select].conceded;
+      teamData[team2Select].goalDiff = teamData[team2Select].goals - teamData[team2Select].conceded;
 
-    // Skor girildikten sonra tabloyu sıralamak için:
-    sortTableByPoints();
-  }
+      // Veriyi yerel depolamaya kaydet
+      localStorage.setItem(team1Select, JSON.stringify(teamData[team1Select]));
+      localStorage.setItem(team2Select, JSON.stringify(teamData[team2Select]));
 
-  // Puan durumu tablosunu puanlara göre sıralayan fonksiyon
-  function sortTableByPoints() {
-    let rows = Array.from(document.getElementById("teamTable").rows).slice(1);
-    rows.sort((a, b) => {
-      let pointsA = parseInt(a.querySelector(".points").textContent);
-      let pointsB = parseInt(b.querySelector(".points").textContent);
-      return pointsB - pointsA;
-    });
+      // Tabloyu güncelle
+      populateTable();
+    }
 
-    // Satırları sıralı şekilde tekrar ekle
-    let tbody = document.getElementById("teamBody");
-    rows.forEach(row => {
-      tbody.appendChild(row);
-    });
-  }
-</script>
+    // Sayfa yüklendiğinde verileri yerel depolamadan al
+    window.onload = function() {
+      teams.forEach(team => {
+        let savedData = localStorage.getItem(team);
+        if (savedData) {
+          teamData[team] = JSON.parse(savedData);
+        }
+      });
+      populateTable();
+    };
+  </script>
 
 </body>
 </html>
