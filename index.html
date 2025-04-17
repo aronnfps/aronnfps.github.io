@@ -63,26 +63,11 @@
         iframe {
             margin-top: 30px;
         }
-        #homePage {
-            display: none;
-            background: url('https://i.imgur.com/NnTgIyz.jpeg') no-repeat center center fixed;
-            background-size: cover;
-        }
     </style>
 </head>
 <body>
-    <!-- Anasayfa butonu -->
-    <button onclick="showHomePage()">RB PRO LİG</button>
-
-    <!-- Anasayfa İçeriği -->
-    <div id="homePage" class="content">
-        <h1>RB PRO LİG - Anasayfa</h1>
-        <p>Hoş geldiniz! RB PRO LİG'e dair bilgilere buradan ulaşabilirsiniz.</p>
-        <button onclick="showScorePage()">Puan Durumuna Git</button>
-    </div>
-
     <!-- Puan Durumu Sayfası -->
-    <div id="scorePage" class="content" style="display: none;">
+    <div class="content">
         <h1>RB PRO LİG - Puan Durumu</h1>
 
         <!-- Yönetici Girişi -->
@@ -156,16 +141,6 @@
 
     <!-- JavaScript Kısmı -->
     <script>
-        function showHomePage() {
-            document.getElementById("homePage").style.display = "block";
-            document.getElementById("scorePage").style.display = "none";
-        }
-
-        function showScorePage() {
-            document.getElementById("homePage").style.display = "none";
-            document.getElementById("scorePage").style.display = "block";
-        }
-
         const correctUsername = "admin";
         const correctPassword = "admin123";
 
