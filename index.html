@@ -68,11 +68,20 @@
             background: url('https://i.hizliresim.com/qoh3lui.png') no-repeat center center fixed; /* Yeni arka plan resmi */
             background-size: cover;
         }
+        /* Yeni stil ekleniyor */
+        .ucl-logo {
+            width: 60px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
     <!-- Anasayfa butonu -->
-    <button onclick="showHomePage()">RB PRO LİG</button>
+    <div style="margin-top: 50px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/UEFA_Champions_League_Logo_2021.svg" alt="Şampiyonlar Ligi" class="ucl-logo">
+        <button onclick="showScorePage()">RB PRO LİG</button>
+    </div>
 
     <!-- Anasayfa İçeriği -->
     <div id="homePage" class="content">
@@ -306,6 +315,7 @@
         }
 
         window.onload = () => {
+            showScorePage();  // Sayfa yüklendiğinde direkt olarak puan durumu sayfasını göster
             populateTable();
             populateDropdowns();
         };
