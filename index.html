@@ -10,9 +10,9 @@
         th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
         th { background-color: #1a2a6c; color: white; }
         tr:nth-child(even) { background-color: #f0f0f0; }
-        .input-container { margin-top: 20px; text-align: center; }
-        label { display: inline-block; width: 120px; text-align: right; }
-        input, select { padding: 5px; margin: 5px; width: 200px; }
+        .input-container { margin-top: 20px; display: flex; justify-content: center; align-items: center; }
+        .input-container input { padding: 5px; margin: 5px; width: 200px; text-align: center; }
+        .input-container button { padding: 8px 12px; font-size: 16px; cursor: pointer; margin-left: 10px; }
         button { padding: 8px 12px; font-size: 16px; cursor: pointer; }
     </style>
 </head>
@@ -23,11 +23,7 @@
 <!-- Yönetici Girişi -->
 <h2>Yönetici Girişi</h2>
 <div class="input-container">
-    <label for="username">Username:</label>
     <input type="text" id="username" placeholder="Username">
-</div>
-<div class="input-container">
-    <label for="password">Password:</label>
     <input type="password" id="password" placeholder="Password">
     <button onclick="adminLogin()">Login</button>
 </div>
@@ -36,49 +32,36 @@
 <div id="adminSection" style="display: none;">
     <h2>Team Management</h2>
     <div class="input-container">
-        <label>New Team Name:</label>
-        <input type="text" id="newTeamName" placeholder="Team Name">
+        <input type="text" id="newTeamName" placeholder="New Team Name">
         <button onclick="addTeam()">Add Team</button>
     </div>
 
     <div class="input-container">
-        <label>Remove Team:</label>
         <select id="removeTeamSelect"></select>
         <button onclick="removeTeam()">Remove Team</button>
     </div>
 
     <h2>Manager Management</h2>
     <div class="input-container">
-        <label>Select Team:</label>
         <select id="selectTeamForTD"></select>
     </div>
     <div class="input-container">
-        <label>New Manager:</label>
-        <input type="text" id="newTD" placeholder="Manager Name">
+        <input type="text" id="newTD" placeholder="New Manager">
         <button onclick="addTD()">Add Manager</button>
     </div>
 
     <div class="input-container">
-        <label>Remove Manager:</label>
         <select id="removeTDSelect"></select>
         <button onclick="removeTD()">Remove Manager</button>
     </div>
 
     <h2>Match Result</h2>
     <div class="input-container">
-        <label>Team 1:</label>
         <select id="team1Select"></select>
-
-        <label>Team 2:</label>
         <select id="team2Select"></select>
-
         <br>
-        <label>Team 1 Score:</label>
-        <input type="number" id="team1Score" value="0">
-
-        <label>Team 2 Score:</label>
-        <input type="number" id="team2Score" value="0">
-
+        <input type="number" id="team1Score" value="0" placeholder="Team 1 Score">
+        <input type="number" id="team2Score" value="0" placeholder="Team 2 Score">
         <button onclick="updateScore()">Update Score</button>
         <button onclick="resetScores()">Reset Scores</button>
     </div>
@@ -97,7 +80,7 @@
             <th>GA</th>
             <th>GD</th>
             <th>Points</th>
-            <th>Manager</th> <!-- Manager Column -->
+            <th>Manager</th>
         </tr>
     </thead>
     <tbody id="teamBody"></tbody>
