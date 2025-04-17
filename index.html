@@ -1,84 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puan Tablosu</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        table {
-            width: 50%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        input {
-            margin: 5px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RB PRO LİG - Puan Durumu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #1a2a6c;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f0f0f0;
+    }
+    .input-container {
+      margin-top: 20px;
+    }
+    input, select {
+      padding: 5px;
+      margin: 5px;
+    }
+    button {
+      padding: 8px 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <h1>12 Takımlı Puan Tablosu</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Takım Adı</th>
-                <th>Puan</th>
-            </tr>
-        </thead>
-        <tbody id="puanTablosu">
-            <tr>
-                <td>Takım 1</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>Takım 2</td>
-                <td>0</td>
-            </tr>
-            <!-- Geri kalan takımları da buraya ekleyin -->
-        </tbody>
-    </table>
 
-    <h2>Maç Sonucu Gir</h2>
-    <div>
-        <input type="text" id="kazananTakim" placeholder="Kazanan Takım">
-        <input type="text" id="kaybedenTakim" placeholder="Kaybeden Takım">
-        <button onclick="macSonucuGir()">Sonucu Gir</button>
-    </div>
+<h1>RB PRO LİG - Puan Durumu</h1>
 
-    <script>
-        function macSonucuGir() {
-            const kazanan = document.getElementById("kazananTakim").value;
-            const kaybeden = document.getElementById("kaybedenTakim").value;
+<table id="teamTable">
+  <thead>
+    <tr>
+      <th>Sıra</th>
+      <th>Takım</th>
+      <th>O</th>
+      <th>G</th>
+      <th>B</th>
+      <th>M</th>
+      <th>AG</th>
+      <th>YG</th>
+      <th>Av</th>
+      <th>Puan</th>
+    </tr>
+  </thead>
+  <tbody id="teamBody">
+    <tr id="team1">
+      <td>1</td>
+      <td>Paris Saint-Germain</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <tr id="team2">
+      <td>2</td>
+      <td>Chelsea</td>
+      <td class="games">0</td>
+      <td class="wins">0</td>
+      <td class="draws">0</td>
+      <td class="losses">0</td>
+      <td class="goals">0</td>
+      <td class="conceded">0</td>
+      <td class="goalDiff">0</td>
+      <td class="points">0</td>
+    </tr>
+    <!-- Diğer takımları ekleyebilirsin -->
+  </tbody>
+</table>
 
-            const tabloSatirlari = document.querySelectorAll("#puanTablosu tr");
+<h2>Maç Sonucu Girin</h2>
+<div class="input-container">
+  <label>Takım 1:</label>
+  <select id="team1Select">
+    <option value="team1">Paris Saint-Germain</option>
+    <option value="team2">Chelsea</option>
+    <!-- Diğer takımları ekleyebilirsin -->
+  </select>
 
-            tabloSatirlari.forEach((satir) => {
-                const takimAdi = satir.cells[0].textContent;
-                if (takimAdi === kazanan) {
-                    satir.cells[1].textContent = parseInt(satir.cells[1].textContent) + 3;
-                }
-            });
+  <label>Takım 2:</label>
+  <select id="team2Select">
+    <option value="team1">Paris Saint-Germain</option>
+    <option value="team2">Chelsea</option>
+    <!-- Diğer takımları ekleyebilirsin -->
+  </select>
 
-            document.getElementById("kazananTakim").value = "";
-            document.getElementById("kaybedenTakim").value = "";
-        }
-    </script>
+  <br>
+  <label>Takım 1 Skoru:</label>
+  <input type="number" id="team1Score" value="0">
+
+  <label>Takım 2 Skoru:</label>
+  <input type="number" id="team2Score" value="0">
+
+  <button onclick="updateScore()">Skoru Güncelle</button>
+</div>
+
+<script>
+  function updateScore() {
+    const team1Select = document.getElementById("team1Select").value;
+    const team2Select = document.getElementById("team2Select").value;
+    const team1Score = parseInt(document.getElementById("team1Score").value);
+    const team2Score = parseInt(document.getElementById("team2Score").value);
+
+    if (!team1Select || !team2Select || isNaN(team1Score) || isNaN(team2Score)) {
+        alert("Lütfen tüm bilgileri eksiksiz girin!");
+        return;
+    }
+
+    const team1Row = document.getElementById(team1Select);
+    const team2Row = document.getElementById(team2Select);
+
+    let team1Data = {
+      games: parseInt(team1Row.querySelector(".games").textContent),
+      wins: parseInt(team1Row.querySelector(".wins").textContent),
+      draws: parseInt(team1Row.querySelector(".draws").textContent),
+      losses: parseInt(team1Row.querySelector(".losses").textContent),
+      goals: parseInt(team1Row.querySelector(".goals").textContent),
+      conceded: parseInt(team1Row.querySelector(".conceded").textContent),
+      goalDiff: parseInt(team1Row.querySelector(".goalDiff").textContent),
+      points: parseInt(team1Row.querySelector(".points").textContent)
+    };
+
+    // Maç sonuçlarını işle
+    team1Data.games++;
+    team1Data.goals += team1Score;
+    team1Data.conceded += team2Score;
+    team1Data.goalDiff = team1Data.goals - team1Data.conceded;
+
+    // Puan ekleme
+    if (team1Score > team2Score) {
+        team1Data.wins++;
+        team1Data.points += 3;
+    } else if (team1Score < team2Score) {
+        team1Data.losses++;
+    } else {
+        team1Data.draws++;
+        team1Data.points += 1;
+    }
+
+    // Güncellenmiş verileri tabloya yansıt
+    team1Row.querySelector(".games").textContent = team1Data.games;
+    team1Row.querySelector(".wins").textContent = team1Data.wins;
+    team1Row.querySelector(".draws").textContent = team1Data.draws;
+    team1Row.querySelector(".losses").textContent = team1Data.losses;
+    team1Row.querySelector(".goals").textContent = team1Data.goals;
+    team1Row.querySelector(".conceded").textContent = team1Data.conceded;
+    team1Row.querySelector(".goalDiff").textContent = team1Data.goalDiff;
+    team1Row.querySelector(".points").textContent = team1Data.points;
+  }
+</script>
+
 </body>
 </html>
