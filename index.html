@@ -23,47 +23,47 @@
 <!-- Yönetici Girişi -->
 <h2>Yönetici Girişi</h2>
 <div class="input-container">
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="adminLogin()">Login</button>
+    <input type="text" id="username" placeholder="Kullanıcı Adı">
+    <input type="password" id="password" placeholder="Şifre">
+    <button onclick="adminLogin()">Giriş Yap</button>
 </div>
 
 <!-- Yönetici Bölümü (Başlangıçta Gizli) -->
 <div id="adminSection" style="display: none;">
-    <h2>Team Management</h2>
+    <h2>Takım Yönetimi</h2>
     <div class="input-container">
-        <input type="text" id="newTeamName" placeholder="New Team Name">
-        <button onclick="addTeam()">Add Team</button>
+        <input type="text" id="newTeamName" placeholder="Yeni Takım Adı">
+        <button onclick="addTeam()">Takım Ekle</button>
     </div>
 
     <div class="input-container">
         <select id="removeTeamSelect"></select>
-        <button onclick="removeTeam()">Remove Team</button>
+        <button onclick="removeTeam()">Takım Sil</button>
     </div>
 
-    <h2>Manager Management</h2>
+    <h2>Yönetici Yönetimi</h2>
     <div class="input-container">
         <select id="selectTeamForTD"></select>
     </div>
     <div class="input-container">
-        <input type="text" id="newTD" placeholder="New Manager">
-        <button onclick="addTD()">Add Manager</button>
+        <input type="text" id="newTD" placeholder="Yeni Yönetici">
+        <button onclick="addTD()">Yönetici Ekle</button>
     </div>
 
     <div class="input-container">
         <select id="removeTDSelect"></select>
-        <button onclick="removeTD()">Remove Manager</button>
+        <button onclick="removeTD()">Yönetici Sil</button>
     </div>
 
-    <h2>Match Result</h2>
+    <h2>Maç Sonucu</h2>
     <div class="input-container">
         <select id="team1Select"></select>
         <select id="team2Select"></select>
         <br>
-        <input type="number" id="team1Score" value="0" placeholder="Team 1 Score">
-        <input type="number" id="team2Score" value="0" placeholder="Team 2 Score">
-        <button onclick="updateScore()">Update Score</button>
-        <button onclick="resetScores()">Reset Scores</button>
+        <input type="number" id="team1Score" value="0" placeholder="Takım 1 Skoru">
+        <input type="number" id="team2Score" value="0" placeholder="Takım 2 Skoru">
+        <button onclick="updateScore()">Skoru Güncelle</button>
+        <button onclick="resetScores()">Puanları Sıfırla</button>
     </div>
 </div>
 
@@ -71,16 +71,16 @@
 <table id="teamTable">
     <thead>
         <tr>
-            <th>Rank</th>
-            <th>Team</th>
-            <th>W</th>
-            <th>D</th>
-            <th>L</th>
-            <th>GF</th>
-            <th>GA</th>
-            <th>GD</th>
-            <th>Points</th>
-            <th>Manager</th>
+            <th>Sıra</th>
+            <th>Takım</th>
+            <th>G</th>
+            <th>B</th>
+            <th>M</th>
+            <th>AG</th>
+            <th>YG</th>
+            <th>AV</th>
+            <th>Puan</th>
+            <th>Yönetici</th>
         </tr>
     </thead>
     <tbody id="teamBody"></tbody>
@@ -90,19 +90,19 @@
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 <script>
-    const correctUsername = "admin";  // Admin username
-    const correctPassword = "admin123";  // Admin password
+    const correctUsername = "admin";  // Admin kullanıcı adı
+    const correctPassword = "admin123";  // Admin şifresi
 
     function adminLogin() {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        // Check if username and password are correct
+        // Kullanıcı adı ve şifreyi kontrol et
         if (username === correctUsername && password === correctPassword) {
-            document.getElementById("adminSection").style.display = "block";  // Show admin section
-            alert("Login successful!");
+            document.getElementById("adminSection").style.display = "block";  // Yönetici bölümünü göster
+            alert("Giriş başarılı!");
         } else {
-            alert("Incorrect username or password!");
+            alert("Yanlış kullanıcı adı veya şifre!");
         }
     }
 
@@ -169,7 +169,7 @@
     function addTeam() {
         const newTeam = document.getElementById("newTeamName").value.trim();
         if (!newTeam || teams.includes(newTeam)) {
-            alert("Please enter a valid and new team name!");
+            alert("Geçerli ve yeni bir takım adı girin!");
             return;
         }
 
@@ -181,7 +181,7 @@
 
         populateTable();
         populateDropdowns();
-        alert(`${newTeam} successfully added!`);
+        alert(`${newTeam} başarıyla eklendi!`);
         document.getElementById("newTeamName").value = "";
     }
 
@@ -193,14 +193,14 @@
 
         populateTable();
         populateDropdowns();
-        alert(`${removeTeam} successfully removed!`);
+        alert(`${removeTeam} başarıyla silindi!`);
     }
 
     function addTD() {
         const team = document.getElementById("selectTeamForTD").value;
         const tdName = document.getElementById("newTD").value.trim();
         if (!tdName) {
-            alert("Please enter a valid manager name!");
+            alert("Geçerli bir yönetici adı girin!");
             return;
         }
 
@@ -211,7 +211,7 @@
 
         localStorage.setItem(team, JSON.stringify(teamData));
         populateTable();
-        alert(`${team} team manager added: ${tdName}`);
+        alert(`${team} takımına yönetici eklendi: ${tdName}`);
         document.getElementById("newTD").value = "";
     }
 
@@ -220,11 +220,11 @@
         let teamData = JSON.parse(localStorage.getItem(team)) || {
             games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
         };
-        teamData.td = "";  // Remove manager
+        teamData.td = "";  // Yöneticiyi kaldır
 
         localStorage.setItem(team, JSON.stringify(teamData));
         populateTable();
-        alert(`${team} team's manager has been removed!`);
+        alert(`${team} takımının yöneticisi kaldırıldı!`);
     }
 
     function updateScore() {
@@ -261,7 +261,7 @@
         teams.forEach(team => {
             let teamData = JSON.parse(localStorage.getItem(team));
 
-            // Keep Manager info and reset other stats
+            // Yöneticiyi koruyup diğer verileri sıfırla
             let td = teamData.td;
 
             const resetData = {
@@ -272,7 +272,7 @@
         });
 
         populateTable();
-        alert("All teams' scores have been reset, but managers are retained!");
+        alert("Tüm takımların puanları sıfırlandı, ancak yöneticiler korundu!");
     }
 
     window.onload = function() {
