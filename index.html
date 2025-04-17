@@ -74,11 +74,14 @@
         "Paris Saint-Germain", "Chelsea", "Liverpool"
     ];
 
+    // Tabloyu doldur
     function populateTable() {
         const tableBody = document.getElementById("teamBody");
         tableBody.innerHTML = "";
         teams.forEach((team, index) => {
-            let teamData = JSON.parse(localStorage.getItem(team)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
+            let teamData = JSON.parse(localStorage.getItem(team)) || {
+                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
+            };
             let row = `<tr id="${team}">
                 <td>${index + 1}</td>
                 <td>${team}</td>
@@ -95,6 +98,7 @@
         });
     }
 
+    // Dropdown listeleri doldur
     function populateDropdowns() {
         const team1Select = document.getElementById("team1Select");
         const team2Select = document.getElementById("team2Select");
@@ -112,6 +116,7 @@
         });
     }
 
+    // Takım ekleme
     function addTeam() {
         const newTeam = document.getElementById("newTeamName").value.trim();
         if (!newTeam || teams.includes(newTeam)) {
@@ -129,6 +134,7 @@
         document.getElementById("newTeamName").value = "";
     }
 
+    // Takım silme
     function removeTeam() {
         const removeTeam = document.getElementById("removeTeamSelect").value;
         teams = teams.filter(team => team !== removeTeam);
@@ -140,6 +146,7 @@
         alert(`${removeTeam} başarıyla silindi!`);
     }
 
+    // Skor güncelleme
     function updateScore() {
         const team1 = document.getElementById("team1Select").value;
         const team2 = document.getElementById("team2Select").value;
@@ -171,6 +178,7 @@
         sortTableByPoints();
     }
 
+    // Tabloyu puan ve averaja göre sırala
     function sortTableByPoints() {
         const tableBody = document.getElementById("teamBody");
         const rows = Array.from(tableBody.getElementsByTagName("tr"));
@@ -178,7 +186,12 @@
         rows.sort((a, b) => {
             const pointsA = parseInt(a.querySelector(".points").textContent);
             const pointsB = parseInt(b.querySelector(".points").textContent);
-            return pointsB - pointsA; // Büyük olan puan üste geçiyor
+            const goalDiffA = parseInt(a.querySelector(".goalDiff").textContent);
+            const goalDiffB = parseInt(b.querySelector(".goalDiff").textContent);
+
+            // Önce puan, sonra averaja göre sırala
+            if (pointsB !== pointsA) return pointsB - pointsA;
+            return goalDiffB - goalDiffA;
         });
 
         rows.forEach((row, index) => {
@@ -187,15 +200,7 @@
         });
     }
 
+    // Tüm puanları sıfırla
     function resetScores() {
         teams.forEach(team => {
             const resetData = {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
-            localStorage.setItem(team, JSON.stringify(resetData));
-        });
-        populateTable();
-        sortTableByPoints();
-        alert("Tüm puanlar sıfırlandı!");
-    }
-
-    window.onload = function() {
-       
