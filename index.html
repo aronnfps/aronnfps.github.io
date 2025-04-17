@@ -37,7 +37,7 @@
     <tbody id="teamBody">
         <script>
             const teams = [
-                "Paris Saint-Germain", "Chelsea", "Liverpool", "Arsenal", "Bayern Leverkusen", 
+                "Paris Saint-Germain", "Chelsea", "Liverpool", "Arsenal", "Bayern Leverkusen",
                 "Real Madrid", "Inter", "Barcelona", "Manchester City", "Juventus", "Atletico Madrid", "AC Milan"
             ];
             
@@ -58,6 +58,13 @@
         </script>
     </tbody>
 </table>
+
+<h2>Takım Yönetimi</h2>
+<div class="input-container">
+    <label>Yeni Takım Adı:</label>
+    <input type="text" id="newTeamName" placeholder="Takım Adı">
+    <button onclick="addTeam()">Takım Ekle</button>
+</div>
 
 <h2>Maç Sonucu Girin</h2>
 <div class="input-container">
@@ -170,7 +177,17 @@
         sortTableByPoints();
         alert("Tüm puanlar sıfırlandı!");
     }
-</script>
 
-</body>
-</html>
+    function addTeam() {
+        const newTeam = document.getElementById("newTeamName").value.trim();
+        if (newTeam && !teams.includes(newTeam)) {
+            teams.push(newTeam);
+            localStorage.setItem(newTeam, JSON.stringify({
+                games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0
+            }));
+
+            const tableBody = document.getElementById("teamBody");
+            const row = document.createElement("tr");
+            row.id = newTeam;
+            row.innerHTML = `
+                <
