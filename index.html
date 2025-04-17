@@ -148,6 +148,33 @@
         localStorage.setItem(team2, JSON.stringify(team2Data));
 
         populateTable();
+        sortTableByPoints();
+    }
+
+    function sortTableByPoints() {
+        const tableBody = document.getElementById("teamBody");
+        const rows = Array.from(tableBody.getElementsByTagName("tr"));
+
+        rows.sort((a, b) => {
+            const pointsA = parseInt(a.querySelector(".points").textContent);
+            const pointsB = parseInt(b.querySelector(".points").textContent);
+            return pointsB - pointsA; // Büyük olan puan üste geçiyor
+        });
+
+        rows.forEach((row, index) => {
+            row.cells[0].textContent = index + 1; // Sıra numarasını güncelle
+            tableBody.appendChild(row);
+        });
+    }
+
+    function resetScores() {
+        teams.forEach(team => {
+            const resetData = {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
+            localStorage.setItem(team, JSON.stringify(resetData));
+        });
+        populateTable();
+        sortTableByPoints();
+        alert("Tüm puanlar sıfırlandı!");
     }
 
     window.onload = function() {
