@@ -35,7 +35,6 @@
         </tr>
     </thead>
     <tbody id="teamBody">
-        <!-- 12 takımlık boş tablo oluşturduk -->
         <script>
             const teams = [
                 "Team1", "Team2", "Team3", "Team4", "Team5", "Team6", "Team7", "Team8", "Team9", "Team10", "Team11", "Team12"
@@ -154,7 +153,10 @@
         const table = document.getElementById("teamBody");
         const rows = Array.from(table.getElementsByTagName("tr"));
         rows.sort((a, b) => parseInt(b.querySelector(".points").textContent) - parseInt(a.querySelector(".points").textContent));
-        rows.forEach(row => table.appendChild(row));
+        rows.forEach((row, index) => {
+            row.cells[0].textContent = index + 1; // Sıra numarasını güncelliyoruz
+            table.appendChild(row);
+        });
     }
 </script>
 
