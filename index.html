@@ -5,39 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RB PRO LİG - Puan Durumu</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    table {
-      width: 90%;
-      margin: 20px auto;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: center;
-    }
-    th {
-      background-color: #1a2a6c;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #f0f0f0;
-    }
-    .input-container {
-      margin-top: 20px;
-    }
-    input, select {
-      padding: 5px;
-      margin: 5px;
-    }
-    button {
-      padding: 8px 12px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; }
+    table { width: 90%; margin: 20px auto; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #1a2a6c; color: white; }
+    tr:nth-child(even) { background-color: #f0f0f0; }
+    .input-container { margin-top: 20px; }
+    input, select { padding: 5px; margin: 5px; }
+    button { padding: 8px 12px; font-size: 16px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -60,31 +35,10 @@
     </tr>
   </thead>
   <tbody id="teamBody">
-    <tr id="team1">
-      <td>1</td>
-      <td>Paris Saint-Germain</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <tr id="team2">
-      <td>2</td>
-      <td>Chelsea</td>
-      <td class="games">0</td>
-      <td class="wins">0</td>
-      <td class="draws">0</td>
-      <td class="losses">0</td>
-      <td class="goals">0</td>
-      <td class="conceded">0</td>
-      <td class="goalDiff">0</td>
-      <td class="points">0</td>
-    </tr>
-    <!-- 10 takım daha ekleyebilirsiniz -->
+    <tr id="team1"><td>1</td><td>Paris Saint-Germain</td><td class="games">0</td><td class="wins">0</td><td class="draws">0</td><td class="losses">0</td><td class="goals">0</td><td class="conceded">0</td><td class="goalDiff">0</td><td class="points">0</td></tr>
+    <tr id="team2"><td>2</td><td>Chelsea</td><td class="games">0</td><td class="wins">0</td><td class="draws">0</td><td class="losses">0</td><td class="goals">0</td><td class="conceded">0</td><td class="goalDiff">0</td><td class="points">0</td></tr>
+    <tr id="team3"><td>3</td><td>Liverpool</td><td class="games">0</td><td class="wins">0</td><td class="draws">0</td><td class="losses">0</td><td class="goals">0</td><td class="conceded">0</td><td class="goalDiff">0</td><td class="points">0</td></tr>
+    <!-- 9 takım daha ekleyebilirsin -->
   </tbody>
 </table>
 
@@ -94,14 +48,16 @@
   <select id="team1Select">
     <option value="team1">Paris Saint-Germain</option>
     <option value="team2">Chelsea</option>
-    <!-- Diğer takımları buraya ekle -->
+    <option value="team3">Liverpool</option>
+    <!-- 9 takım daha ekleyebilirsin -->
   </select>
 
   <label>Takım 2:</label>
   <select id="team2Select">
     <option value="team1">Paris Saint-Germain</option>
     <option value="team2">Chelsea</option>
-    <!-- Diğer takımları buraya ekle -->
+    <option value="team3">Liverpool</option>
+    <!-- 9 takım daha ekleyebilirsin -->
   </select>
 
   <br>
@@ -115,13 +71,8 @@
 </div>
 
 <script>
-  // Sayfa açıldığında localStorage'dan verileri yükle
-  window.onload = function() {
-    loadScores();
-    sortTableByPoints();
-  };
+  window.onload = function() { loadScores(); sortTableByPoints(); };
 
-  // LocalStorage'dan verileri yükle ve tabloya yansıt
   function loadScores() {
     const teams = document.querySelectorAll("#teamBody tr");
     teams.forEach(row => {
@@ -134,85 +85,36 @@
   }
 
   function updateScore() {
-    const team1Select = document.getElementById("team1Select").value;
-    const team2Select = document.getElementById("team2Select").value;
+    const team1 = document.getElementById("team1Select").value;
+    const team2 = document.getElementById("team2Select").value;
     const team1Score = parseInt(document.getElementById("team1Score").value);
     const team2Score = parseInt(document.getElementById("team2Score").value);
+    
+    let team1Data = JSON.parse(localStorage.getItem(team1)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
+    let team2Data = JSON.parse(localStorage.getItem(team2)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
 
-    if (!team1Select || !team2Select || isNaN(team1Score) || isNaN(team2Score)) {
-        alert("Lütfen tüm bilgileri eksiksiz girin!");
-        return;
-    }
+    if (team1Score > team2Score) { team1Data.wins++; team1Data.points += 3; team2Data.losses++; }
+    else if (team1Score < team2Score) { team2Data.wins++; team2Data.points += 3; team1Data.losses++; }
+    else { team1Data.draws++; team2Data.draws++; team1Data.points++; team2Data.points++; }
 
-    const team1Row = document.getElementById(team1Select);
-    const team2Row = document.getElementById(team2Select);
+    localStorage.setItem(team1, JSON.stringify(team1Data));
+    localStorage.setItem(team2, JSON.stringify(team2Data));
 
-    let team1Data = JSON.parse(localStorage.getItem(team1Select)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
-    let team2Data = JSON.parse(localStorage.getItem(team2Select)) || {games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0};
-
-    // Maç sonuçlarını işle
-    team1Data.games++;
-    team2Data.games++;
-
-    if (team1Score > team2Score) {
-        team1Data.wins++;
-        team2Data.losses++;
-        team1Data.points += 3;
-    } else if (team1Score < team2Score) {
-        team2Data.wins++;
-        team1Data.losses++;
-        team2Data.points += 3;
-    } else {
-        team1Data.draws++;
-        team2Data.draws++;
-        team1Data.points++;
-        team2Data.points++;
-    }
-
-    team1Data.goals += team1Score;
-    team2Data.goals += team2Score;
-    team1Data.conceded += team2Score;
-    team2Data.conceded += team1Score;
-    team1Data.goalDiff = team1Data.goals - team1Data.conceded;
-    team2Data.goalDiff = team2Data.goals - team2Data.conceded;
-
-    localStorage.setItem(team1Select, JSON.stringify(team1Data));
-    localStorage.setItem(team2Select, JSON.stringify(team2Data));
-
-    updateTableUI(team1Select, team1Data);
-    updateTableUI(team2Select, team2Data);
-
+    updateTableUI(team1, team1Data);
+    updateTableUI(team2, team2Data);
     sortTableByPoints();
   }
 
   function updateTableUI(teamId, data) {
     let row = document.getElementById(teamId);
-    if (row) {
-        row.querySelector(".games").textContent = data.games;
-        row.querySelector(".wins").textContent = data.wins;
-        row.querySelector(".draws").textContent = data.draws;
-        row.querySelector(".losses").textContent = data.losses;
-        row.querySelector(".goals").textContent = data.goals;
-        row.querySelector(".conceded").textContent = data.conceded;
-        row.querySelector(".goalDiff").textContent = data.goalDiff;
-        row.querySelector(".points").textContent = data.points;
-    }
+    if (row) { row.querySelector(".points").textContent = data.points; }
   }
 
   function sortTableByPoints() {
     const table = document.getElementById("teamBody");
     const rows = Array.from(table.getElementsByTagName("tr"));
-
-    rows.sort((a, b) => {
-        const pointsA = parseInt(a.querySelector(".points").textContent);
-        const pointsB = parseInt(b.querySelector(".points").textContent);
-        return pointsB - pointsA;
-    });
-
-    rows.forEach((row, index) => {
-        row.cells[0].textContent = index + 1; // Sıra numarasını güncelle
-        table.appendChild(row);
-    });
+    rows.sort((a, b) => parseInt(b.querySelector(".points").textContent) - parseInt(a.querySelector(".points").textContent));
+    rows.forEach(row => table.appendChild(row));
   }
 </script>
 
