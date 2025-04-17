@@ -63,16 +63,41 @@
             background: url('https://i.hizliresim.com/qoh3lui.png') no-repeat center center fixed;
             background-size: cover;
         }
-        #scorePage {
+        #scorePage, #tournamentPage {
             display: none;
             background-color: white;
+        }
+
+        /* RB PRO LİG Butonunu büyütme */
+        button {
+            padding: 15px 30px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #1a2a6c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        /* Okey Turnuvası Sayfası */
+        #tournamentPage h1 {
+            font-size: 50px;
+            color: #1a2a6c;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
-    <!-- Anasayfa Butonu -->
+    <!-- Anasayfa Butonları -->
     <div style="margin-top: 50px;">
         <button onclick="showScorePage()">RB PRO LİG</button>
+        <button onclick="showTournamentPage()">101 OKEY</button>
     </div>
 
     <!-- Anasayfa İçeriği -->
@@ -153,16 +178,29 @@
         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 
+    <!-- 101 OKEY Sayfası -->
+    <div id="tournamentPage" class="content">
+        <h1>YAKINDA</h1>
+    </div>
+
     <!-- JavaScript Kısmı -->
     <script>
         function showHomePage() {
             document.getElementById("homePage").style.display = "block";
             document.getElementById("scorePage").style.display = "none";
+            document.getElementById("tournamentPage").style.display = "none";
         }
 
         function showScorePage() {
             document.getElementById("homePage").style.display = "none";
             document.getElementById("scorePage").style.display = "block";
+            document.getElementById("tournamentPage").style.display = "none";
+        }
+
+        function showTournamentPage() {
+            document.getElementById("homePage").style.display = "none";
+            document.getElementById("scorePage").style.display = "none";
+            document.getElementById("tournamentPage").style.display = "block";
         }
 
         const correctUsername = "admin";
