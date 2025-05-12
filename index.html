@@ -1,291 +1,68 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RB PRO LİG - Puan Durumu</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: url('https://i.hizliresim.com/qoh3lui.png') no-repeat center center fixed;
-      background-size: cover;
-      margin: 0;
-      padding: 0;
-    }
-    .content {
-      background-color: rgba(255, 255, 255, 0.95);
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 1000px;
-    }
-    h1, h2 {
-      color: #1a2a6c;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: center;
-    }
-    th {
-      background-color: #1a2a6c;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    .input-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .input-container input,
-    .input-container select,
-    .input-container button {
-      padding: 8px;
-      font-size: 14px;
-    }
-    button {
-      background-color: #1a2a6c;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #333;
-    }
-    iframe {
-      margin-top: 30px;
-      border-radius: 12px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aroNNfps </title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts for text -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- Meta Tags for social sharing (optional) -->
+    <meta property="og:title" content="aroNNfps">
+    <meta property="og:description" content="My personal website!">
 </head>
 <body>
-  <div class="content">
-    <h1>RB PRO LİG - Puan Durumu</h1>
+    <div id="main-content">
+        <!-- Website header -->
+        <h1>Welcome to aroNNfps</h1>
+        <p>My Life My Rules!</p>
 
-    <div class="input-container">
-      <input type="text" id="username" placeholder="Kullanıcı Adı">
-      <input type="password" id="password" placeholder="Şifre">
-      <button onclick="adminLogin()">Giriş Yap</button>
+        <!-- Social Media Links -->
+        <div class="social-media">
+            <a href="https://www.tiktok.com/@aronnfps" target="_blank">TikTok</a>
+            <a href="https://www.instagram.com/salihgfb_/" target="_blank">Instagram</a>
+            <a href="https://discord.gg/HPHmSqg9" target="_blank">Discord</a>
+            <a href="https://x.com/salihgfb_" target="_blank">Twitter</a>
+            <a href="https://kick.com/aronnfps" target="_blank">Kick</a>
+        </div>
     </div>
 
-    <div id="adminSection" style="display: none;">
-      <h2>Takım Yönetimi</h2>
-      <div class="input-container">
-        <input type="text" id="newTeamName" placeholder="Yeni Takım Adı">
-        <button onclick="addTeam()">Takım Ekle</button>
-        <select id="removeTeamSelect"></select>
-        <button onclick="removeTeam()">Takım Sil</button>
-      </div>
+    <!-- Background Animation (Hacker Theme) -->
+    <div class="hacker-background"></div>
 
-      <h2>Yönetici Yönetimi</h2>
-      <div class="input-container">
-        <select id="selectTeamForTD"></select>
-        <input type="text" id="newTD" placeholder="Yeni Yönetici">
-        <button onclick="addTD()">Yönetici Ekle</button>
-        <button onclick="removeTD()">Yönetici Sil</button>
-      </div>
-
-      <h2>Maç Sonucu Ekle</h2>
-      <div class="input-container">
-        <select id="team1Select"></select>
-        <input type="number" id="score1" placeholder="Skor 1">
-        <select id="team2Select"></select>
-        <input type="number" id="score2" placeholder="Skor 2">
-        <button onclick="submitMatchResult()">Sonuç Ekle</button>
-      </div>
-
-      <button onclick="resetScores()">Puanları Sıfırla</button>
+</body>
+</html>
+<!-- Hacker Style Terminal -->
+<div class="terminal">
+    <p>Loading...</p>
+    <p>Accessing System!</p>
+</div>
+<!-- YouTube müzik videosu arka planda çalsın -->
+<iframe width="0" height="0" src="https://www.youtube.com/embed/GQwBXef55D8?autoplay=1&loop=1&playlist=GQwBXef55D8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<!-- Hacker Style Background -->
+<div class="hacker-background">
+    <p class="hacker-text"></p>
+</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Style</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hacker Background -->
+    <div class="hacker-background">
+        <canvas id="hackerCanvas"></canvas>
     </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Takım</th>
-          <th>G</th>
-          <th>B</th>
-          <th>M</th>
-          <th>AG</th>
-          <th>YG</th>
-          <th>AV</th>
-          <th>Puan</th>
-          <th>Yönetici</th>
-        </tr>
-      </thead>
-      <tbody id="teamBody"></tbody>
-    </table>
-
-    <iframe src="https://open.spotify.com/embed/track/4RmSuRMlr17amYP0bKlxaf?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-  </div>
-
-  <script>
-    const correctUsername = "admin";
-    const correctPassword = "admin123";
-
-    let teams = JSON.parse(localStorage.getItem("teams")) || [
-      "Paris Saint-Germain", "Chelsea", "Liverpool", "Barcelona",
-      "Bayern Münih", "İnter", "Arsenal", "Atletico Madrid",
-      "Manchester United", "Bayern Leverkusen", "Manchester City", "Real Madrid"
-    ];
-
-    function adminLogin() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      if (user === correctUsername && pass === correctPassword) {
-        document.getElementById("adminSection").style.display = "block";
-        alert("Giriş başarılı!");
-      } else {
-        alert("Hatalı kullanıcı adı veya şifre!");
-      }
-    }
-
-    function addTeam() {
-      const teamName = document.getElementById("newTeamName").value.trim();
-      if (teamName && !teams.includes(teamName)) {
-        teams.push(teamName);
-        localStorage.setItem("teams", JSON.stringify(teams));
-        localStorage.setItem(teamName, JSON.stringify({
-          games: 0, wins: 0, draws: 0, losses: 0, goals: 0, conceded: 0, goalDiff: 0, points: 0, td: ""
-        }));
-        updateAll();
-        document.getElementById("newTeamName").value = "";
-      }
-    }
-
-    function removeTeam() {
-      const teamName = document.getElementById("removeTeamSelect").value;
-      teams = teams.filter(t => t !== teamName);
-      localStorage.setItem("teams", JSON.stringify(teams));
-      localStorage.removeItem(teamName);
-      updateAll();
-    }
-
-    function addTD() {
-      const team = document.getElementById("selectTeamForTD").value;
-      const td = document.getElementById("newTD").value.trim();
-      if (team && td) {
-        const teamData = JSON.parse(localStorage.getItem(team)) || {};
-        teamData.td = td;
-        localStorage.setItem(team, JSON.stringify(teamData));
-        updateAll();
-        document.getElementById("newTD").value = "";
-      }
-    }
-
-    function removeTD() {
-      const team = document.getElementById("selectTeamForTD").value;
-      const teamData = JSON.parse(localStorage.getItem(team)) || {};
-      teamData.td = "";
-      localStorage.setItem(team, JSON.stringify(teamData));
-      updateAll();
-    }
-
-    function submitMatchResult() {
-      const team1 = document.getElementById("team1Select").value;
-      const team2 = document.getElementById("team2Select").value;
-      const score1 = parseInt(document.getElementById("score1").value);
-      const score2 = parseInt(document.getElementById("score2").value);
-      if (team1 === team2 || isNaN(score1) || isNaN(score2)) {
-        alert("Geçersiz giriş!");
-        return;
-      }
-
-      const data1 = JSON.parse(localStorage.getItem(team1)) || {};
-      const data2 = JSON.parse(localStorage.getItem(team2)) || {};
-
-      data1.games++; data2.games++;
-      data1.goals += score1; data1.conceded += score2;
-      data2.goals += score2; data2.conceded += score1;
-
-      if (score1 > score2) {
-        data1.wins++; data1.points += 3;
-        data2.losses++;
-      } else if (score2 > score1) {
-        data2.wins++; data2.points += 3;
-        data1.losses++;
-      } else {
-        data1.draws++; data2.draws++;
-        data1.points++; data2.points++;
-      }
-
-      data1.goalDiff = data1.goals - data1.conceded;
-      data2.goalDiff = data2.goals - data2.conceded;
-
-      localStorage.setItem(team1, JSON.stringify(data1));
-      localStorage.setItem(team2, JSON.stringify(data2));
-
-      updateAll();
-    }
-
-    function resetScores() {
-      teams.forEach(team => {
-        localStorage.setItem(team, JSON.stringify({
-          games: 0, wins: 0, draws: 0, losses: 0,
-          goals: 0, conceded: 0, goalDiff: 0, points: 0,
-          td: JSON.parse(localStorage.getItem(team))?.td || ""
-        }));
-      });
-      updateAll();
-    }
-
-    function populateDropdowns() {
-      const selects = ["team1Select", "team2Select", "removeTeamSelect", "selectTeamForTD"];
-      selects.forEach(id => {
-        const sel = document.getElementById(id);
-        sel.innerHTML = "";
-        teams.forEach(team => {
-          const option = document.createElement("option");
-          option.value = team;
-          option.textContent = team;
-          sel.appendChild(option);
-        });
-      });
-    }
-
-    function populateTable() {
-      const tbody = document.getElementById("teamBody");
-      tbody.innerHTML = "";
-
-      const sorted = [...teams].sort((a, b) => {
-        const A = JSON.parse(localStorage.getItem(a)) || {};
-        const B = JSON.parse(localStorage.getItem(b)) || {};
-        return B.points - A.points || B.goalDiff - A.goalDiff;
-      });
-
-      sorted.forEach((team, i) => {
-        const d = JSON.parse(localStorage.getItem(team)) || {};
-        const row = `<tr>
-          <td>${i + 1}</td>
-          <td>${team}</td>
-          <td>${d.wins + d.draws + d.losses || 0}</td>
-          <td>${d.draws || 0}</td>
-          <td>${d.losses || 0}</td>
-          <td>${d.goals || 0}</td>
-          <td>${d.conceded || 0}</td>
-          <td>${d.goalDiff || 0}</td>
-          <td>${d.points || 0}</td>
-          <td>${d.td || ""}</td>
-        </tr>`;
-        tbody.innerHTML += row;
-      });
-    }
-
-    function updateAll() {
-      populateTable();
-      populateDropdowns();
-    }
-
-    window.onload = updateAll;
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
